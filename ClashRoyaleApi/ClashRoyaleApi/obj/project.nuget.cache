@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "4vB6+B+tSL6b53XCMX8hL0CC8/3h7ZhXaM5M4u8u1a+5lduPaA12dQyUOhol0IdLSFFzjH8xdNOu7OLhyUmnGQ==",
+  "success": false,
+  "projectFilePath": "C:\\Users\\nlnvdme\\Documents\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1301",
+      "level": "Error",
+      "message": "Failed to retrieve information about 'Swashbuckle.AspNetCore' from remote source 'https://devstore.vanderlande.com/artifactory/api/nuget/nlveg-nuget-release-local-01/FindPackagesById()?id='Swashbuckle.AspNetCore'&semVerLevel=2.0.0'.",
+      "libraryId": "Swashbuckle.AspNetCore"
+    }
+  ]
+}
