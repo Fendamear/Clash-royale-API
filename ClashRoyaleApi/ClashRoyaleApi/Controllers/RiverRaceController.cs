@@ -1,5 +1,5 @@
-﻿using ClashRoyaleApi.Logic.RiverRace;
-using ClashRoyaleApi.Models.JsonModels;
+﻿using ClashRoyaleCodeBase.Logic.RiverRace;
+using ClashRoyaleCodeBase.Models.JsonModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClashRoyaleApi.Controllers
@@ -13,14 +13,8 @@ namespace ClashRoyaleApi.Controllers
             _riverRaceLogic = riverRaceLogic;
         }
 
-
-
         public IActionResult Index()
         {
-
-
-
-
             return View();
         }
 
@@ -37,8 +31,5 @@ namespace ClashRoyaleApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-
-
     }
 }

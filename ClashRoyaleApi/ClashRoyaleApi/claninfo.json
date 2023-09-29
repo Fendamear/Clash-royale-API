@@ -1,0 +1,75 @@
+{
+  "items": [
+    {
+      "tag": "#L2880298",
+      "name": "zuenhairygranny",
+      "role": "member",
+      "lastSeen": "20230929T153813.000Z",
+      "expLevel": 53,
+      "trophies": 6988,
+      "arena": {
+        "id": 54000015,
+        "name": "Arena 18"
+      },
+      "clanRank": 1,
+      "previousClanRank": 1,
+      "donations": 42,
+      "donationsReceived": 40,
+      "clanChestPoints": 0
+    },
+    {
+      "tag": "#9JL98CQUY",
+      "name": "Kingkiller",
+      "role": "elder",
+      "lastSeen": "20230929T134149.000Z",
+      "expLevel": 42,
+      "trophies": 7701,
+      "arena": {
+        "id": 54000017,
+        "name": "Arena 20"
+      },
+      "clanRank": 2,
+      "previousClanRank": 2,
+      "donations": 181,
+      "donationsReceived": 160,
+      "clanChestPoints": 0
+    },
+    {
+      "tag": "#2QPP2JLP8",
+      "name": "Piet",
+      "role": "coLeader",
+      "lastSeen": "20230929T093243.000Z",
+      "expLevel": 52,
+      "trophies": 7575,
+      "arena": {
+        "id": 54000017,
+        "name": "Arena 20"
+      },
+      "clanRank": 3,
+      "previousClanRank": 3,
+      "donations": 131,
+      "donationsReceived": 160,
+      "clanChestPoints": 0
+    },
+    {
+      "tag": "#VUUYJ9YC",
+      "name": "britt power",
+      "role": "elder",
+      "lastSeen": "20230929T053648.000Z",
+      "expLevel": 48,
+      "trophies": 7530,
+      "arena": {
+        "id": 54000017,
+        "name": "Arena 20"
+      },
+      "clanRank": 4,
+      "previousClanRank": 5,
+      "donations": 214,
+      "donationsReceived": 240,
+      "clanChestPoints": 0
+    }
+  ],
+  "paging": {
+    "cursors": {}
+  }
+}

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OX5CSpZetw+I4LCm6GjEsf9OvRh64TWF2gbIlFy53d3z5NadMDk6GB82DtDjHuSD3Z7dSTvNZKv1hSn12jBIEw==",
+  "dgSpecHash": "NjIC7a8qMGuqvbAofypMHK1neU0qJL9yfXu409BUFeRw8A+ljzgSOUfPM9kGCmGfM8Uz8e3ER096iWTY46uuOw==",
   "success": true,
   "projectFilePath": "C:\\Documents\\Thuis\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj",
   "expectedPackageFiles": [
@@ -13,6 +13,7 @@
     "C:\\Users\\Nickv\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\Nickv\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Nickv\\.nuget\\packages\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
+    "C:\\Users\\Nickv\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "C:\\Users\\Nickv\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Nickv\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\Nickv\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
