@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nlnvdme\\Documents\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj": {}
+    "C:\\Documents\\Thuis\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nlnvdme\\Documents\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj": {
+    "C:\\Documents\\Thuis\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nlnvdme\\Documents\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj",
+        "projectUniqueName": "C:\\Documents\\Thuis\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj",
         "projectName": "ClashRoyaleApi",
-        "projectPath": "C:\\Users\\nlnvdme\\Documents\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj",
-        "packagesPath": "C:\\Users\\nlnvdme\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nlnvdme\\Documents\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\obj\\",
+        "projectPath": "C:\\Documents\\Thuis\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj",
+        "packagesPath": "C:\\Users\\Nickv\\.nuget\\packages\\",
+        "outputPath": "C:\\Documents\\Thuis\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\nlnvdme\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Nickv\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://devstore.vanderlande.com/artifactory/api/nuget/nlveg-nuget-release-local-01": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -44,6 +44,28 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
@@ -68,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

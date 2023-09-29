@@ -1,3 +1,7 @@
+using ClashRoyaleApi.Data;
+using ClashRoyaleApi.Logic.RiverRace;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,7 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddDbContext<DataContext>(options =>
+{
+   options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(5, 7, 31)));
+  
+});
+
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IRiverRaceLogic, RiverRaceLogic>();
 
 var app = builder.Build();
 

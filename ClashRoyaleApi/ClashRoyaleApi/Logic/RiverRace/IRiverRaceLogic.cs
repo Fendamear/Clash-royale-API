@@ -1,10 +1,10 @@
-﻿using ClashRoyaleApi.Models;
+﻿using ClashRoyaleApi.Models.JsonModels;
 
 namespace ClashRoyaleApi.Logic.RiverRace
 {
     public interface IRiverRaceLogic
     {
-        RiverRaceLog GetRiverRaceLog();
+        Task<Root> GetRiverRaceLog(int limit);
 
     }
 }

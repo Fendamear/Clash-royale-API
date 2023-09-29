@@ -1,0 +1,50 @@
+{
+    "items": [
+        {
+            "seasonId": 100,
+            "sectionIndex": 2,
+            "createdDate": "20230925T093206.000Z",
+            "standings": [
+                {
+                    "rank": 1,
+                    "trophyChange": 20,
+                    "clan": {
+                        "tag": "#8QLQL2JR",
+                        "name": "herres",
+                        "badgeId": 16000028,
+                        "fame": 9606,
+                        "repairPoints": 0,
+                        "finishTime": "19691231T235959.000Z",
+                        "participants": [
+                            {
+                                "tag": "#QY9JVCG8U",
+                                "name": "Julio",
+                                "fame": 1200,
+                                "repairPoints": 0,
+                                "boatAttacks": 0,
+                                "decksUsed": 7,
+                                "decksUsedToday": 0
+                            },
+                            {
+                                "tag": "#PRY8VCGU",
+                                "name": "batonie",
+                                "fame": 2100,
+                                "repairPoints": 0,
+                                "boatAttacks": 0,
+                                "decksUsed": 14,
+                                "decksUsedToday": 0
+                            }
+                        ],
+                        "periodPoints": 0,
+                        "clanScore": 3560
+                    }
+                }
+            ]
+        }
+    ],
+    "paging": {
+        "cursors": {
+            "after": "eyJwb3MiOjF9"
+        }
+    }
+}
