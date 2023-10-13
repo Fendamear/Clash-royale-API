@@ -56,6 +56,4 @@ C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\b
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\System.Text.Encodings.Web.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\System.Text.Json.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
-C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\ClashRoyaleCodeBase.dll
-C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\ClashRoyaleCodeBase.pdb
-C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\BCrypt.Net-Next.dll

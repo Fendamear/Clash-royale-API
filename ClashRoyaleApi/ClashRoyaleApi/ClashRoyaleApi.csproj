@@ -8,14 +8,19 @@
 
   <ItemGroup>
     <Content Remove="claninfo.json" />
+    <Content Remove="Json\claninfo.json" />
+    <Content Remove="Logic\ClanMembers\claninfo.json" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="claninfo.json" />
+    <None Include="Json\claninfo.json" />
+    <None Include="Logic\ClanMembers\claninfo.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
       <PrivateAssets>all</PrivateAssets>
@@ -28,7 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClashRoyaleCodeBase\ClashRoyaleCodeBase.csproj" />
+    <Folder Include="DTOs\Clan\" />
+    <Folder Include="DTOs\RiverRace\" />
   </ItemGroup>
 
 </Project>

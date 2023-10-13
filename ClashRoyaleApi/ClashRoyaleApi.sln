@@ -5,8 +5,6 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClashRoyaleApi", "ClashRoyaleApi\ClashRoyaleApi.csproj", "{06EB3B68-E5A4-427B-B0E0-852FD1F88EB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClashRoyaleCodeBase", "ClashRoyaleCodeBase\ClashRoyaleCodeBase.csproj", "{2EC2675D-3D75-4844-B86F-907B87D627CD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{40C0950D-15BC-4381-BDD4-4C19F878A722}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -22,10 +20,6 @@ Global
 		{06EB3B68-E5A4-427B-B0E0-852FD1F88EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06EB3B68-E5A4-427B-B0E0-852FD1F88EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06EB3B68-E5A4-427B-B0E0-852FD1F88EB5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2EC2675D-3D75-4844-B86F-907B87D627CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EC2675D-3D75-4844-B86F-907B87D627CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EC2675D-3D75-4844-B86F-907B87D627CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EC2675D-3D75-4844-B86F-907B87D627CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

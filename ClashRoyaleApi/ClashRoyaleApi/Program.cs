@@ -1,7 +1,8 @@
-using ClashRoyaleCodeBase.Logic.ClanMembers;
-using ClashRoyaleCodeBase.Data;
-using ClashRoyaleCodeBase.Logic.RiverRace;
+using ClashRoyaleApi.Logic.ClanMembers;
+using ClashRoyaleApi.Data;
+using ClashRoyaleApi.Logic.RiverRace;
 using Microsoft.EntityFrameworkCore;
+using ClashRoyaleApi.Logic.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IRiverRaceLogic, RiverRaceLogic>();
 builder.Services.AddScoped<IClanMemberLogic, ClanMemberLogic>();
+builder.Services.AddScoped<IAuthenticationLogic, AuthenticationLogic>();
 
 var app = builder.Build();
 

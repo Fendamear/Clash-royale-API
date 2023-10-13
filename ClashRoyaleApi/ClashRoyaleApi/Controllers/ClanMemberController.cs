@@ -1,4 +1,4 @@
-﻿using ClashRoyaleCodeBase.Logic.ClanMembers;
+﻿using ClashRoyaleApi.Logic.ClanMembers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClashRoyaleApi.Controllers

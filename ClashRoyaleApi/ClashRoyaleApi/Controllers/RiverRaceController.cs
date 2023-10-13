@@ -1,5 +1,5 @@
-﻿using ClashRoyaleCodeBase.Logic.RiverRace;
-using ClashRoyaleCodeBase.Models.JsonModels;
+﻿using ClashRoyaleApi.Logic.RiverRace;
+using ClashRoyaleApi.Models.JsonModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClashRoyaleApi.Controllers
