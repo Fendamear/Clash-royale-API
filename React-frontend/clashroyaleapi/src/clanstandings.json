@@ -1,0 +1,759 @@
+{
+    "items": [
+      {
+        "tag": "#PVUU0PG9",
+        "name": "Houffa-Knights",
+        "rank": 1,
+        "previousRank": 1,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 5010,
+        "members": 2,
+        "badgeId": 16000020
+      },
+      {
+        "tag": "#PGY8UJYG",
+        "name": "Dutch Corps 4",
+        "rank": 2,
+        "previousRank": 2,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4925,
+        "members": 49,
+        "badgeId": 16000028
+      },
+      {
+        "tag": "#28CR9JY",
+        "name": "Juin",
+        "rank": 3,
+        "previousRank": 3,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4872,
+        "members": 50,
+        "badgeId": 16000120
+      },
+      {
+        "tag": "#PLC2VULC",
+        "name": "Dutch Corps 3",
+        "rank": 4,
+        "previousRank": 4,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4670,
+        "members": 50,
+        "badgeId": 16000028
+      },
+      {
+        "tag": "#9PCPQ9LQ",
+        "name": "WickedFamily",
+        "rank": 5,
+        "previousRank": 5,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4648,
+        "members": 50,
+        "badgeId": 16000013
+      },
+      {
+        "tag": "#URLPP",
+        "name": "25 + Reunited",
+        "rank": 6,
+        "previousRank": 6,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4448,
+        "members": 50,
+        "badgeId": 16000108
+      },
+      {
+        "tag": "#9VGL0PQ",
+        "name": "DutchWarriors",
+        "rank": 7,
+        "previousRank": 7,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4442,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#GLVG0PY",
+        "name": "Holland",
+        "rank": 8,
+        "previousRank": 8,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4360,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#YUJUV8Y",
+        "name": "*masters*",
+        "rank": 9,
+        "previousRank": 9,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4310,
+        "members": 49,
+        "badgeId": 16000044
+      },
+      {
+        "tag": "#LV0LQ",
+        "name": "adults nl",
+        "rank": 10,
+        "previousRank": 10,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4302,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#GYU09CG",
+        "name": "#AlmightyLions",
+        "rank": 11,
+        "previousRank": 11,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4273,
+        "members": 47,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#9YP8UY",
+        "name": "Brabant Royale",
+        "rank": 12,
+        "previousRank": 12,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4185,
+        "members": 48,
+        "badgeId": 16000101
+      },
+      {
+        "tag": "#9LRQC28V",
+        "name": "Dutch",
+        "rank": 13,
+        "previousRank": 13,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4098,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#9Q9CULYP",
+        "name": "Nova Star NL",
+        "rank": 14,
+        "previousRank": 14,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4077,
+        "members": 50,
+        "badgeId": 16000044
+      },
+      {
+        "tag": "#9YJ2ULLU",
+        "name": "Dutch Elite",
+        "rank": 15,
+        "previousRank": 15,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4030,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#PG8RG2L2",
+        "name": "ChestHunters NL",
+        "rank": 16,
+        "previousRank": 16,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4020,
+        "members": 50,
+        "badgeId": 16000025
+      },
+      {
+        "tag": "#YQLQC0",
+        "name": "01 Dutch Adults",
+        "rank": 17,
+        "previousRank": 17,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4018,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#LPUR0C",
+        "name": "Dutch Movement",
+        "rank": 18,
+        "previousRank": 18,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 4005,
+        "members": 49,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#9GJJ80",
+        "name": "flying dutchman",
+        "rank": 19,
+        "previousRank": 19,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3987,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#2R09LJ",
+        "name": "Krakaka",
+        "rank": 20,
+        "previousRank": 20,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3985,
+        "members": 46,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#2LL9R2V",
+        "name": "Holland's elite",
+        "rank": 21,
+        "previousRank": 21,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3980,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#2Q92CG9",
+        "name": "Dutch",
+        "rank": 22,
+        "previousRank": 22,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3960,
+        "members": 50,
+        "badgeId": 16000038
+      },
+      {
+        "tag": "#229RJJC",
+        "name": "TEAM[NL]",
+        "rank": 23,
+        "previousRank": 23,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3945,
+        "members": 46,
+        "badgeId": 16000175
+      },
+      {
+        "tag": "#LP90QQ8U",
+        "name": "#1 Holland!",
+        "rank": 24,
+        "previousRank": 24,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3935,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#2PJVJUCV",
+        "name": "100% NL",
+        "rank": 25,
+        "previousRank": 25,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3895,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#Q2C8G0",
+        "name": "Dutch Warriors",
+        "rank": 26,
+        "previousRank": 26,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3859,
+        "members": 50,
+        "badgeId": 16000005
+      },
+      {
+        "tag": "#YLGCPC2C",
+        "name": "Dutch Polarbear",
+        "rank": 27,
+        "previousRank": 27,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3837,
+        "members": 4,
+        "badgeId": 16000168
+      },
+      {
+        "tag": "#LYUL2LP",
+        "name": "AmsTeRDaMneD",
+        "rank": 28,
+        "previousRank": 28,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3830,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#L2CJL0LU",
+        "name": "Brabant",
+        "rank": 29,
+        "previousRank": 29,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3775,
+        "members": 50,
+        "badgeId": 16000146
+      },
+      {
+        "tag": "#QVCVJQ0",
+        "name": "100% actief",
+        "rank": 30,
+        "previousRank": 30,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3770,
+        "members": 49,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#P8VCULPU",
+        "name": "Dutch bandits",
+        "rank": 31,
+        "previousRank": 31,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3770,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#2JL8G2L",
+        "name": "NEDERCLASH",
+        "rank": 32,
+        "previousRank": 32,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3745,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#JLR2V9",
+        "name": "300",
+        "rank": 33,
+        "previousRank": 33,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3735,
+        "members": 50,
+        "badgeId": 16000044
+      },
+      {
+        "tag": "#Y298QRCY",
+        "name": "*masters*2.0*",
+        "rank": 34,
+        "previousRank": 34,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3715,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#PYPL0LYG",
+        "name": "-NumberOne-NL-",
+        "rank": 35,
+        "previousRank": 35,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3700,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#8QLQL2JR",
+        "name": "herres",
+        "rank": 36,
+        "previousRank": 36,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3690,
+        "members": 50,
+        "badgeId": 16000028
+      },
+      {
+        "tag": "#8VYJCCRY",
+        "name": "Dutch Elites",
+        "rank": 37,
+        "previousRank": 37,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3685,
+        "members": 48,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#PG0R8P",
+        "name": "Dutch 30+",
+        "rank": 38,
+        "previousRank": 38,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3680,
+        "members": 48,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#YCPYLL2P",
+        "name": "De wijze mensen",
+        "rank": 39,
+        "previousRank": 39,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3670,
+        "members": 50,
+        "badgeId": 16000142
+      },
+      {
+        "tag": "#2299UP",
+        "name": "Dutch division",
+        "rank": 40,
+        "previousRank": 40,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3660,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#PRJLP0",
+        "name": "Superkneuzen",
+        "rank": 41,
+        "previousRank": 41,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3647,
+        "members": 48,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#PY82L9J",
+        "name": "nederland",
+        "rank": 42,
+        "previousRank": 42,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3645,
+        "members": 48,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#29YU8U0",
+        "name": "NL Bastions",
+        "rank": 43,
+        "previousRank": 43,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3635,
+        "members": 49,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#98Y8LG28",
+        "name": "Amsterdam1.6",
+        "rank": 44,
+        "previousRank": 44,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3620,
+        "members": 50,
+        "badgeId": 16000092
+      },
+      {
+        "tag": "#Y20RVC",
+        "name": "Dutch only",
+        "rank": 45,
+        "previousRank": 45,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3615,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#LQPUVUCV",
+        "name": "Begaaiers",
+        "rank": 46,
+        "previousRank": 46,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3610,
+        "members": 48,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#29PLC9V0",
+        "name": "nederland",
+        "rank": 47,
+        "previousRank": 47,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3605,
+        "members": 49,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#9JPL0LCR",
+        "name": "DUTCH",
+        "rank": 48,
+        "previousRank": 48,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3595,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#2QRLP0CG",
+        "name": "#PatatSquad",
+        "rank": 49,
+        "previousRank": 49,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3590,
+        "members": 50,
+        "badgeId": 16000074
+      },
+      {
+        "tag": "#YGGLLQV",
+        "name": "#TeamBeast",
+        "rank": 50,
+        "previousRank": 50,
+        "location": {
+          "id": 57000166,
+          "name": "Netherlands",
+          "isCountry": true,
+          "countryCode": "NL"
+        },
+        "clanScore": 3570,
+        "members": 50,
+        "badgeId": 16000074
+      }
+    ],
+    "paging": {
+      "cursors": {
+        "after": "eyJwb3MiOjUwfQ"
+      }
+    }
+  }

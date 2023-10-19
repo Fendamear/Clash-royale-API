@@ -1,4 +1,4 @@
-﻿using ClashRoyaleApi.DTOs.Authentication;
+﻿using ClashRoyaleApi.DTOs.Authentication.Register;
 using ClashRoyaleApi.Logic.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
