@@ -3,6 +3,11 @@ using ClashRoyaleApi.Data;
 using ClashRoyaleApi.Logic.RiverRace;
 using Microsoft.EntityFrameworkCore;
 using ClashRoyaleApi.Logic.Authentication;
+using ClashRoyaleApi.Logic.CurrentRiverRace;
+using Microsoft.Extensions.Hosting;
+using Quartz;
+using Quartz.Impl;
+using ClashRoyaleApi.Logic.EventScheduler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +27,26 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IRiverRaceLogic, RiverRaceLogic>();
 builder.Services.AddScoped<IClanMemberLogic, ClanMemberLogic>();
 builder.Services.AddScoped<IAuthenticationLogic, AuthenticationLogic>();
+builder.Services.AddScoped<ICurrentRiverRace, CurrentRiverRace>();
 
 var app = builder.Build();
 
+ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
+IScheduler scheduler = schedulerFactory.GetScheduler().Result;
+
+IJobDetail jobDetail = JobBuilder.Create<TestScheduler>()
+    .WithIdentity("SampleJob", "group1")
+    .Build();
+
+jobDetail.JobDataMap.Put("param1", 0);
+
+ITrigger trigger = TriggerBuilder.Create()
+    .WithIdentity("sampleTrigger", "group1")
+    .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(8, 0))
+    .Build();
+
+scheduler.ScheduleJob(jobDetail, trigger).Wait();
+scheduler.Start().Wait();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

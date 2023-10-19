@@ -12,7 +12,6 @@ namespace ClashRoyaleApi.Logic.RiverRace
 {
     public class RiverRaceLogic : IRiverRaceLogic
     {
-        static HttpClient client = new HttpClient();
         private readonly DataContext _dataContext;
         private readonly IConfiguration _configuration;
 

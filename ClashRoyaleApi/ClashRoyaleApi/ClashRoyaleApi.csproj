@@ -9,14 +9,12 @@
   <ItemGroup>
     <Content Remove="claninfo.json" />
     <Content Remove="Json\claninfo.json" />
-    <Content Remove="Logic\ClanMembers\claninfo.json" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="claninfo.json" />
     <None Include="Json\claninfo.json" />
-    <None Include="Logic\ClanMembers\claninfo.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +27,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+    <PackageReference Include="Quartz" Version="3.7.0" />
+    <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.7.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 

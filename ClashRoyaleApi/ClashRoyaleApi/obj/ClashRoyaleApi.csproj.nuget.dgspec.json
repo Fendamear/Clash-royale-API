@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Documents\\Thuis\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj": {}
+    "C:\\Users\\Nickv\\Documents\\Thuis\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj": {}
   },
   "projects": {
-    "C:\\Documents\\Thuis\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj": {
+    "C:\\Users\\Nickv\\Documents\\Thuis\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Documents\\Thuis\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj",
+        "projectUniqueName": "C:\\Users\\Nickv\\Documents\\Thuis\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj",
         "projectName": "ClashRoyaleApi",
-        "projectPath": "C:\\Documents\\Thuis\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj",
+        "projectPath": "C:\\Users\\Nickv\\Documents\\Thuis\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj",
         "packagesPath": "C:\\Users\\Nickv\\.nuget\\packages\\",
-        "outputPath": "C:\\Documents\\Thuis\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\obj\\",
+        "outputPath": "C:\\Users\\Nickv\\Documents\\Thuis\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\Nickv\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -69,6 +65,14 @@
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[7.0.0, )"
+            },
+            "Quartz": {
+              "target": "Package",
+              "version": "[3.7.0, )"
+            },
+            "Quartz.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[3.7.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

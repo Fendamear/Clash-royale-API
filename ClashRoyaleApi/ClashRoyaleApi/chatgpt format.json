@@ -1,0 +1,85 @@
+{
+    "state": "full",
+    "clan": {
+      "tag": "#8QLQL2JR",
+      "name": "herres",
+      "badgeId": 16000028,
+      "fame": 0,
+      "repairPoints": 0,
+      "participants": [
+        {
+          "tag": "#QY9JVCG8U",
+          "name": "Julio",
+          "fame": 0,
+          "repairPoints": 0,
+          "boatAttacks": 0,
+          "decksUsed": 0,
+          "decksUsedToday": 0
+        },
+        {
+          "tag": "#PRY8VCGU",
+          "name": "batonie",
+          "fame": 0,
+          "repairPoints": 0,
+          "boatAttacks": 0,
+          "decksUsed": 0,
+          "decksUsedToday": 0
+        }              
+      ],
+      "periodPoints": 0,
+      "clanScore": 3685
+    },
+    "clans": [
+      {
+        "tag": "#PPCY2GPR",
+        "name": "Be Indian",
+        "badgeId": 16000059,
+        "fame": 0,
+        "repairPoints": 0,
+        "participants": [
+          {
+            "tag": "#28JY08QL",
+            "name": "IA❤️KAUSHIK",
+            "fame": 0,
+            "repairPoints": 0,
+            "boatAttacks": 0,
+            "decksUsed": 0,
+            "decksUsedToday": 0
+          },
+          {
+            "tag": "#CRR9YJ08P",
+            "name": "Clasher",
+            "fame": 0,
+            "repairPoints": 0,
+            "boatAttacks": 0,
+            "decksUsed": 0,
+            "decksUsedToday": 0
+          }                             
+        ],
+        "periodPoints": 0,
+        "clanScore": 3678
+      }
+    ],
+    "sectionIndex": 2,
+    "periodIndex": 16,
+    "periodType": "training",
+    "periodLogs": [
+      {
+        "periodIndex": 3,
+        "items": [
+          {
+            "clan": {
+              "tag": "#8QLQL2JR"
+            },
+            "pointsEarned": 32250,
+            "progressStartOfDay": 0,
+            "progressEndOfDay": 3435,
+            "endOfDayRank": 0,
+            "progressEarned": 3000,
+            "numOfDefensesRemaining": 15,
+            "progressEarnedFromDefenses": 435
+          }
+        ]
+      }
+    ]
+  }
