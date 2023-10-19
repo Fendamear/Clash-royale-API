@@ -14,5 +14,26 @@ namespace ClashRoyaleApi.Models
             Joined,
             RoleChange
         }
+
+        public enum PeriodType
+        {
+            TRAINING,
+            WARDAY,
+            COLLOSEUM
+        }
+
+        public enum SchedulerTime
+        {
+            Schedule0800,
+            SCHEDULE1030,
+            SCHEDULE1100,
+            SCHEDULE1130,
+        }
+
+        public enum Status
+        {
+            SUCCES,
+            FAILED
+        }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using ClashRoyaleApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,46 +11,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClashRoyaleApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231019151856_newRiverRaceLog")]
+    partial class newRiverRaceLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("ClashRoyaleApi.Logic.Logging.LoggingModels.CurrentRiverRaceLog", b =>
-                {
-                    b.Property<Guid>("Guid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("DayId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Exception")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("SchedulerTime")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("SeasonId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SectionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Guid");
-
-                    b.ToTable("CurrentRiverRaceLogs");
-                });
 
             modelBuilder.Entity("ClashRoyaleApi.Models.DbModels.DBUser", b =>
                 {
@@ -145,47 +116,6 @@ namespace ClashRoyaleApi.Migrations
                     b.HasKey("Guid");
 
                     b.ToTable("DbClanMembers");
-                });
-
-            modelBuilder.Entity("ClashRoyaleApi.Models.DbModels.DbCurrentRiverRace", b =>
-                {
-                    b.Property<Guid>("Guid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("DayId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DecksNotUsed")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DecksUsedToday")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fame")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("Schedule")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SeasonId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SeasonSectionDay")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("SectionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Tag")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Guid");
-
-                    b.ToTable("CurrentRiverRace");
                 });
 
             modelBuilder.Entity("ClashRoyaleApi.Models.DbModels.DbRiverRaceClan", b =>

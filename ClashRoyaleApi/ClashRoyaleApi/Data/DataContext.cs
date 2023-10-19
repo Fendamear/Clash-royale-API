@@ -1,4 +1,5 @@
-﻿using ClashRoyaleApi.Models.DbModels;
+﻿using ClashRoyaleApi.Logic.Logging.LoggingModels;
+using ClashRoyaleApi.Models.DbModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +28,15 @@ namespace ClashRoyaleApi.Data
         public DbSet<DbClanMembers> DbClanMembers { get; set; }
 
         public DbSet<DBUser> DBUser { get; set; }   
+
+        public DbSet<DbRiverRaceLog> RiverRaceLogs { get; set; }
+
+        public DbSet<DbCurrentRiverRace> CurrentRiverRace { get; set;}
+
+
+        //data entries for logging
+
+        public DbSet<CurrentRiverRaceLog> CurrentRiverRaceLogs { get; set; }    
 
     }
 }

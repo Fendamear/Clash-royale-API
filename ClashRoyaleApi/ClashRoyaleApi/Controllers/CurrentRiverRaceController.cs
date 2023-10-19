@@ -1,5 +1,6 @@
 ﻿using ClashRoyaleApi.Logic.CurrentRiverRace;
 using Microsoft.AspNetCore.Mvc;
+using static ClashRoyaleApi.Models.EnumClass;
 
 namespace ClashRoyaleApi.Controllers
 {
@@ -13,11 +14,12 @@ namespace ClashRoyaleApi.Controllers
 
 
         [HttpGet("/currentriverrace")]
-        public ActionResult GetCurrentRiverRace()
+        public ActionResult GetCurrentRiverRace(SchedulerTime time)
         {
             try
             {
-               return Ok(_currentRiverRace.GetCurrentRiverRace());
+                //return Ok(_currentRiverRace.GetCurrentRiverRace());
+                return Ok(_currentRiverRace.CurrentRiverRaceScheduler(time));
             }
             catch (Exception ex)
             {
@@ -25,11 +27,6 @@ namespace ClashRoyaleApi.Controllers
                 throw;
             }
         }
-
-
-
-
-
 
         public IActionResult Index()
         {

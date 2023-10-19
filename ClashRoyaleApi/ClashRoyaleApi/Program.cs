@@ -8,6 +8,9 @@ using Microsoft.Extensions.Hosting;
 using Quartz;
 using Quartz.Impl;
 using ClashRoyaleApi.Logic.EventScheduler;
+using static ClashRoyaleApi.Models.EnumClass;
+using Quartz.Spi;
+using ClashRoyaleApi.Logic.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,25 +31,31 @@ builder.Services.AddScoped<IRiverRaceLogic, RiverRaceLogic>();
 builder.Services.AddScoped<IClanMemberLogic, ClanMemberLogic>();
 builder.Services.AddScoped<IAuthenticationLogic, AuthenticationLogic>();
 builder.Services.AddScoped<ICurrentRiverRace, CurrentRiverRace>();
+builder.Services.AddScoped<ICrLogger, CrLogger>();  
+builder.Services.AddScoped<IJob, RiverRaceScheduler>();
+
+builder.Services.AddQuartz(q =>
+{
+    var jobKey = new JobKey("RiverRaceSchedular");
+
+    q.AddJob<RiverRaceScheduler>(opts => opts.WithIdentity(jobKey));
+
+    q.AddTrigger(opts => opts.ForJob(jobKey).UsingJobData("param", (int)SchedulerTime.SCHEDULE1030)
+    .WithIdentity("riverRaceSchedular-1030")
+    .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(21, 26,
+        new[] { DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday }
+    )));
+
+    q.AddTrigger(opts => opts.ForJob(jobKey).UsingJobData("param", (int)SchedulerTime.SCHEDULE1130)
+    .WithIdentity("riverRaceSchedular-1130")
+    .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(21, 28,
+        new[] { DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday }
+    )));
+});
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 var app = builder.Build();
 
-ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
-IScheduler scheduler = schedulerFactory.GetScheduler().Result;
-
-IJobDetail jobDetail = JobBuilder.Create<TestScheduler>()
-    .WithIdentity("SampleJob", "group1")
-    .Build();
-
-jobDetail.JobDataMap.Put("param1", 0);
-
-ITrigger trigger = TriggerBuilder.Create()
-    .WithIdentity("sampleTrigger", "group1")
-    .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(8, 0))
-    .Build();
-
-scheduler.ScheduleJob(jobDetail, trigger).Wait();
-scheduler.Start().Wait();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -104,13 +104,6 @@ namespace ClashRoyaleApi.Logic.RiverRace
                 }
 
             }
-
-
-
-
-
-
-
         }
 
         private bool DoesSeasonAndSectionIndexExistParticipants(int seasonId, int sectionId)
@@ -140,7 +133,6 @@ namespace ClashRoyaleApi.Logic.RiverRace
             }
             return false;
         }
-
 
         private bool AddRiverRaceParticipants(RiverRaceClan clan, int seasonId, int sectionId, string createdAt)
         {
