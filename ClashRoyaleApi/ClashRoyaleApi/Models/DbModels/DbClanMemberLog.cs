@@ -13,15 +13,15 @@ namespace ClashRoyaleApi.Models.DbModels
         [Key]
         public Guid Guid { get; set; }
 
-        public string Tag { get; set; }
+        public string Tag { get; set; } = string.Empty;
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public DateTime Time { get; set; }
 
-        public string? OldValue { get; set; }
+        public string OldValue { get; set; } = string.Empty;
 
-        public string? NewValue { get; set; }
+        public string NewValue { get; set; } = string.Empty;
 
         public MemberStatus Status { get; set; }    
 

@@ -18,14 +18,14 @@ namespace ClashRoyaleApi.Logic.EventScheduler
 
         }
 
-        public Task Execute(IJobExecutionContext context)
+        public async Task Execute(IJobExecutionContext context)
         {
             try
             {
                 SchedulerTime time = (SchedulerTime)context.MergedJobDataMap.Values.First();
-                CurrentRiverRaceLog log = _riverrace.CurrentRiverRaceScheduler(time);
+                CurrentRiverRaceLog log = await _riverrace.CurrentRiverRaceScheduler(time);
                 _logger.CurrentRiverRaceLog(log);
-                return Task.CompletedTask;
+                await Task.CompletedTask;
             }
             catch (Exception)
             {

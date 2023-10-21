@@ -1,4 +1,5 @@
-﻿using ClashRoyaleApi.Logic.Logging.LoggingModels;
+﻿using ClashRoyaleApi.DTOs.River_Race_Season_Log;
+using ClashRoyaleApi.Logic.Logging.LoggingModels;
 using ClashRoyaleApi.Models.CurrentRiverRace;
 using static ClashRoyaleApi.Models.EnumClass;
 
@@ -8,6 +9,14 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
     {
         Task<Root> GetCurrentRiverRace();
 
-        CurrentRiverRaceLog CurrentRiverRaceScheduler(SchedulerTime time);
+        Task<CurrentRiverRaceLog> CurrentRiverRaceScheduler(SchedulerTime time);
+
+        Task PostRiverRaceLog(PostRiverRaceLogDTO post);
+
+        Task<List<GetRiverRaceSeasonLogDTO>> GetRiverRaceSeasonLog();
+
+        Task<bool> DeleteRiverRaceLog(int seasonId, int sectionId);
+
+        int GetSeasonId(int sectionId, PeriodType type);
     }
 }

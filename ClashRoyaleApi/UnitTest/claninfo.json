@@ -1,0 +1,94 @@
+{
+  "items": [
+    {
+      "tag": "#L2880298",
+      "name": "zuenhairygranny",
+      "role": "elder",
+      "lastSeen": "20231021T083456.000Z",
+      "expLevel": 53,
+      "trophies": 6988,
+      "arena": {
+        "id": 54000015,
+        "name": "Arena 18"
+      },
+      "clanRank": 1,
+      "previousClanRank": 17,
+      "donations": 36,
+      "donationsReceived": 0,
+      "clanChestPoints": 0
+    },
+    {
+      "tag": "#2QPP2JLP8",
+      "name": "Piet",
+      "role": "coLeader",
+      "lastSeen": "20231021T111813.000Z",
+      "expLevel": 54,
+      "trophies": 8113,
+      "arena": {
+        "id": 54000018,
+        "name": "Arena 21"
+      },
+      "clanRank": 2,
+      "previousClanRank": 2,
+      "donations": 370,
+      "donationsReceived": 320,
+      "clanChestPoints": 0
+    },
+    {
+      "tag": "#Y2VPQL0C",
+      "name": "niekuden",
+      "role": "elder",
+      "lastSeen": "20231021T112744.000Z",
+      "expLevel": 54,
+      "trophies": 8089,
+      "arena": {
+        "id": 54000018,
+        "name": "Arena 21"
+      },
+      "clanRank": 3,
+      "previousClanRank": 1,
+      "donations": 430,
+      "donationsReceived": 160,
+      "clanChestPoints": 0
+    },
+    {
+      "tag": "#9JL98CQUY",
+      "name": "Kingkiller",
+      "role": "elder",
+      "lastSeen": "20231021T112811.000Z",
+      "expLevel": 42,
+      "trophies": 7597,
+      "arena": {
+        "id": 54000017,
+        "name": "Arena 20"
+      },
+      "clanRank": 4,
+      "previousClanRank": 3,
+      "donations": 170,
+      "donationsReceived": 120,
+      "clanChestPoints": 0
+    },
+    {
+      "tag": "#VUUYJ9YC",
+      "name": "britt power",
+      "role": "elder",
+      "lastSeen": "20231021T052319.000Z",
+      "expLevel": 48,
+      "trophies": 7584,
+      "arena": {
+        "id": 54000017,
+        "name": "Arena 20"
+      },
+      "clanRank": 5,
+      "previousClanRank": 4,
+      "donations": 299,
+      "donationsReceived": 280,
+      "clanChestPoints": 0
+    }
+  ],
+  "paging": {
+    "cursors": {
+      "after": "eyJwb3MiOjV9"
+    }
+  }
+}

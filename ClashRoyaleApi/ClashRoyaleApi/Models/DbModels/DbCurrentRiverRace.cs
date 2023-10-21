@@ -27,5 +27,25 @@ namespace ClashRoyaleApi.Models.DbModels
         public int DecksNotUsed { get; set; }
 
         public SchedulerTime Schedule { get; set; }
+
+        public DbCurrentRiverRace()
+        {
+
+        }
+
+        public DbCurrentRiverRace(Guid guid, int seasonId, int sectionId, int dayId, string? seasonSectionDay, string? tag, string? name, int fame, int decksUsedToday, int decksNotUsed, SchedulerTime schedule)
+        {
+            Guid = guid;
+            SeasonId = seasonId;
+            SectionId = sectionId;
+            DayId = dayId;
+            SeasonSectionDay = seasonSectionDay;
+            Tag = tag;
+            Name = name;
+            Fame = fame;
+            DecksUsedToday = decksUsedToday;
+            DecksNotUsed = decksNotUsed;
+            Schedule = schedule;
+        }
     }
 }

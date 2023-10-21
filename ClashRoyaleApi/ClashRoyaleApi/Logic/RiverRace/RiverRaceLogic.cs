@@ -61,7 +61,7 @@ namespace ClashRoyaleApi.Logic.RiverRace
                         SeasonSectionIndex = mergedString,
                         CreatedDate = createdAt,
                         Rank = rank,
-                        Tag = standing.Clan.Tag,
+                        Tag = clanTag,
                         Name = standing.Clan.Name,
                         Fame = standing.Clan.Fame,
                         TrophyChange = trophyChange,

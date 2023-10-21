@@ -1,7 +1,10 @@
-﻿using ClashRoyaleApi.Data;
+﻿using AutoMapper;
+using ClashRoyaleApi.Data;
+using ClashRoyaleApi.DTOs.River_Race_Season_Log;
 using ClashRoyaleApi.Logic.Logging.LoggingModels;
 using ClashRoyaleApi.Models.CurrentRiverRace;
 using ClashRoyaleApi.Models.DbModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -9,31 +12,81 @@ using static ClashRoyaleApi.Models.EnumClass;
 
 namespace ClashRoyaleApi.Logic.CurrentRiverRace
 {
-    public class CurrentRiverRace : ICurrentRiverRace
+    public class CurrentRiverRaceLogic : ICurrentRiverRace
     {
 
         private readonly IConfiguration _configuration;
+        private readonly IMapper _Mapper;
         private readonly DataContext _dataContext;    
 
-        public CurrentRiverRace (IConfiguration configuration, DataContext context)
+        public CurrentRiverRaceLogic (IConfiguration configuration, DataContext context, IMapper mapper)
         {
             _configuration = configuration;
+            _dataContext = context;
+            _Mapper = mapper;
+        }
+
+        public CurrentRiverRaceLogic(DataContext context)
+        {
             _dataContext = context;
         }
 
         public async Task<Root> GetCurrentRiverRace()
         {
-            string response = RoyaleApiCall();
+            string response = await RoyaleApiCall();
             var log = JsonConvert.DeserializeObject<Root>(response);
             return log;
         }
 
-        public CurrentRiverRaceLog CurrentRiverRaceScheduler(SchedulerTime time)
+        public async Task<List<GetRiverRaceSeasonLogDTO>> GetRiverRaceSeasonLog()
+        {
+            List<DbRiverRaceLog> log = await _dataContext.RiverRaceLogs.OrderByDescending(t => t.TimeStamp).ToListAsync();
+            List<GetRiverRaceSeasonLogDTO> response = new List<GetRiverRaceSeasonLogDTO>();
+
+            foreach (var logItem in log) 
+            {
+                response.Add(new GetRiverRaceSeasonLogDTO()
+                {
+                    TimeStamp = logItem.TimeStamp,
+                    SeasonId = logItem.SeasonId,
+                    SectionId = logItem.SectionId,
+                    type = logItem.Type,
+                });        
+            }
+            return response;
+        }
+
+        public async Task PostRiverRaceLog(PostRiverRaceLogDTO post)
+        {
+            if (await _dataContext.RiverRaceLogs.AnyAsync(x => x.SeasonId == post.SeasonId && x.SectionId == post.SectionId)) throw new Exception("this log already exists");
+
+            DbRiverRaceLog log = new DbRiverRaceLog()
+            {
+                Guid = Guid.NewGuid(),
+                TimeStamp = DateTime.Now,
+                SeasonId = post.SeasonId,
+                SectionId = post.SectionId, 
+                Type = post.type,
+            };
+            _dataContext.RiverRaceLogs.Add(log);
+            await _dataContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeleteRiverRaceLog(int seasonId, int sectionId)
+        {
+            DbRiverRaceLog log = await _dataContext.RiverRaceLogs.Where(x => x.SeasonId == seasonId && x.SectionId == sectionId).FirstOrDefaultAsync();
+            if (log == null) return false;
+            _dataContext.RiverRaceLogs.Remove(log);
+            await _dataContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<CurrentRiverRaceLog> CurrentRiverRaceScheduler(SchedulerTime time)
         {
             CurrentRiverRaceLog res = new CurrentRiverRaceLog();    
             try
             {
-                string response = RoyaleApiCall();
+                string response = await RoyaleApiCall();
                 var log = JsonConvert.DeserializeObject<Root>(response);
 
                 PeriodType type = (PeriodType)Enum.Parse(typeof(PeriodType), log.periodType, true);
@@ -46,7 +99,6 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                 res.SeasonId = seasonId;
                 res.SectionId = log.sectionIndex;
                 res.SchedulerTime = time.ToString();
-                res.TimeStamp = DateTime.Now;
 
                 if (!_dataContext.CurrentRiverRace.Any(x => x.SeasonId == seasonId && x.SectionId == log.sectionIndex && x.DayId == dayOfWeek))
                 {
@@ -97,48 +149,47 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                 }
                 res.Exception = "event schedule successfull";
                 res.Status = Status.SUCCES;
+                res.TimeStamp = DateTime.Now;
                 return res;
             }
             catch (Exception ex)
             {
                 res.Exception = ex.Message;
                 res.Status = Status.FAILED;
+                res.TimeStamp = DateTime.Now;
                 return res;
             }
         }
 
-        private string RoyaleApiCall()
+        private async Task<string> RoyaleApiCall()
         {
-            return File.ReadAllText("./currenrriverrace.json");
-
-            string apiUrl = _configuration.GetSection("RoyaleAPI:HttpAdressClanInfo").Value!;
+            string apiUrl = _configuration.GetSection("RoyaleAPI:HttpAdressCurrentRiverRace").Value!;
             string accessToken = _configuration.GetSection("RoyaleAPI:AccessToken").Value!;
 
-            //using (HttpClient httpClient = new HttpClient())
-            //{
-            //    httpClient.BaseAddress = new Uri(apiUrl);
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(apiUrl);
 
-            //    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-            //    try
-            //    {
-            //        HttpResponseMessage response = httpClient.GetAsync(apiUrl);
+                try
+                {
+                    HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
-            //        if (response.IsSuccessStatusCode)
-            //        {
-            //            return response.Content.ReadAsStringAsync();
-            //        }
-            //        else
-            //        {
-            //            throw new Exception("failed with status " + response.StatusCode);
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        throw;
-            //    }
-        
-            
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return await response.Content.ReadAsStringAsync();
+                    }
+                    else
+                    {
+                        throw new Exception("failed with status " + response.StatusCode);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
         }
 
         private static int GetDayOfWeek()
@@ -160,28 +211,29 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
             }
         }
 
-        private int GetSeasonId(int sectionId, PeriodType type)
+        public int GetSeasonId(int sectionId, PeriodType type)
         {
-            var lastRecord = _dataContext.RiverRaceLogs.OrderByDescending(t => t.timeStamp).FirstOrDefault();
+            var lastRecord = _dataContext.RiverRaceLogs.OrderByDescending(t => t.TimeStamp).FirstOrDefault();
 
             if(lastRecord == null)
             {
-                _dataContext.RiverRaceLogs.Add(new DbRiverRaceLog()
+                DbRiverRaceLog log = new DbRiverRaceLog()
                 {
                     Guid = Guid.NewGuid(),
-                    SeasonId = 100,
+                    SeasonId = lastRecord.SeasonId,
                     SectionId = sectionId,
-                    timeStamp = DateTime.Now,
-                    type = type
-                });
+                    TimeStamp = DateTime.Now,
+                    Type = type
+                };
+                _dataContext.RiverRaceLogs.Add(log);     
                 _dataContext.SaveChanges();
-                lastRecord = _dataContext.RiverRaceLogs.OrderByDescending(t => t.timeStamp).FirstOrDefault();
+                lastRecord = log;
             }
 
             if (lastRecord.SectionId == sectionId) return lastRecord.SeasonId;
             if (type == PeriodType.TRAINING) throw new Exception("this method was called at a training day");
 
-            if(lastRecord.type == PeriodType.COLLOSEUM)
+            if(lastRecord.Type == PeriodType.COLLOSEUM)
             {
                 //write to database, sectionID + 1
                 int newSeasonID = lastRecord.SeasonId + 1;
@@ -191,8 +243,8 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                     Guid = Guid.NewGuid(),
                     SectionId = sectionId,
                     SeasonId = newSeasonID,
-                    timeStamp = DateTime.Now,
-                    type = type
+                    TimeStamp = DateTime.Now,
+                    Type = type
                 });
                 _dataContext.SaveChanges();
                 return newSeasonID;
@@ -205,8 +257,8 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                     Guid = Guid.NewGuid(),
                     SectionId = sectionId,
                     SeasonId = lastRecord.SeasonId,
-                    timeStamp = DateTime.Now,
-                    type = type
+                    TimeStamp = DateTime.Now,
+                    Type = type
                 });
                 _dataContext.SaveChanges();
                 return lastRecord.SeasonId;

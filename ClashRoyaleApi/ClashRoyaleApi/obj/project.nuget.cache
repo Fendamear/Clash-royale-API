@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "sRC3aGmzxgqzrk++JkRYvUcBvV14/tTs2F43L/uqc682sxkIK51X7pLWzmzKahBO3irlFbXetR8DAnv9usZqyg==",
+  "dgSpecHash": "AfvdE5HS66bDzESGvJdd9Mfc8p+yh/nGSRnnkwQSBFzonwizwAQFb4szQMlY6/no/dqgp7BEP9567+nrzYEbJA==",
   "success": true,
   "projectFilePath": "C:\\Documents\\Thuis\\Clash royale\\Clash-royale-API\\ClashRoyaleApi\\ClashRoyaleApi\\ClashRoyaleApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Nickv\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\Nickv\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Nickv\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Nickv\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\Nickv\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Nickv\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.11\\microsoft.entityframeworkcore.7.0.11.nupkg.sha512",
     "C:\\Users\\Nickv\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.11\\microsoft.entityframeworkcore.abstractions.7.0.11.nupkg.sha512",
     "C:\\Users\\Nickv\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.11\\microsoft.entityframeworkcore.analyzers.7.0.11.nupkg.sha512",

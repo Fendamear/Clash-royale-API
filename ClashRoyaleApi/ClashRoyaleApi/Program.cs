@@ -11,6 +11,8 @@ using ClashRoyaleApi.Logic.EventScheduler;
 using static ClashRoyaleApi.Models.EnumClass;
 using Quartz.Spi;
 using ClashRoyaleApi.Logic.Logging;
+using System.Text.Json.Serialization;
+using ClashRoyaleApi.Logic.RoyaleApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,12 +29,17 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddControllersWithViews().AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
 builder.Services.AddScoped<IRiverRaceLogic, RiverRaceLogic>();
 builder.Services.AddScoped<IClanMemberLogic, ClanMemberLogic>();
 builder.Services.AddScoped<IAuthenticationLogic, AuthenticationLogic>();
-builder.Services.AddScoped<ICurrentRiverRace, CurrentRiverRace>();
+builder.Services.AddScoped<ICurrentRiverRace, CurrentRiverRaceLogic>();
 builder.Services.AddScoped<ICrLogger, CrLogger>();  
 builder.Services.AddScoped<IJob, RiverRaceScheduler>();
+builder.Services.AddScoped<IHttpClientWrapper, HttpClientWrapper>();
+builder.Services.AddScoped<HttpClient, HttpClient>();
 
 builder.Services.AddQuartz(q =>
 {
@@ -42,7 +49,7 @@ builder.Services.AddQuartz(q =>
 
     q.AddTrigger(opts => opts.ForJob(jobKey).UsingJobData("param", (int)SchedulerTime.SCHEDULE1030)
     .WithIdentity("riverRaceSchedular-1030")
-    .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(21, 26,
+    .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(11, 25,
         new[] { DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday }
     )));
 
