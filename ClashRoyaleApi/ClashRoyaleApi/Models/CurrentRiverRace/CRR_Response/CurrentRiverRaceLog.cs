@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static ClashRoyaleApi.Models.EnumClass;
 
-namespace ClashRoyaleApi.Logic.Logging.LoggingModels
+namespace ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response
 {
     public class CurrentRiverRaceLog
     {
@@ -13,18 +13,19 @@ namespace ClashRoyaleApi.Logic.Logging.LoggingModels
         public int SectionId { get; set; }
 
         public int DayId { get; set; }
-        
-        public Status Status { get; set;}
+
+        public Status Status { get; set; }
 
         public DateTime TimeStamp { get; set; }
 
-        public string? SchedulerTime { get; set; }
+        public SchedulerTime SchedulerTime { get; set; }
 
         public string? Exception { get; set; }
 
+
         public CurrentRiverRaceLog()
         {
-            Guid = Guid.NewGuid();    
+            Guid = Guid.NewGuid();
         }
 
         public CurrentRiverRaceLog(string ex)

@@ -1,6 +1,6 @@
 ﻿using ClashRoyaleApi.DTOs.River_Race_Season_Log;
-using ClashRoyaleApi.Logic.Logging.LoggingModels;
 using ClashRoyaleApi.Models.CurrentRiverRace;
+using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
 using static ClashRoyaleApi.Models.EnumClass;
 
 namespace ClashRoyaleApi.Logic.CurrentRiverRace
@@ -9,7 +9,7 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
     {
         Task<Root> GetCurrentRiverRace();
 
-        Task<CurrentRiverRaceLog> CurrentRiverRaceScheduler(SchedulerTime time);
+        Task<Response> CurrentRiverRaceScheduler(SchedulerTime time);
 
         Task PostRiverRaceLog(PostRiverRaceLogDTO post);
 

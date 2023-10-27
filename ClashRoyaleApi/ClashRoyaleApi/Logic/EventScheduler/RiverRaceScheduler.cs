@@ -1,6 +1,6 @@
 ﻿using ClashRoyaleApi.Logic.CurrentRiverRace;
 using ClashRoyaleApi.Logic.Logging;
-using ClashRoyaleApi.Logic.Logging.LoggingModels;
+using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
 using Quartz;
 using static ClashRoyaleApi.Models.EnumClass;
 
@@ -23,8 +23,8 @@ namespace ClashRoyaleApi.Logic.EventScheduler
             try
             {
                 SchedulerTime time = (SchedulerTime)context.MergedJobDataMap.Values.First();
-                CurrentRiverRaceLog log = await _riverrace.CurrentRiverRaceScheduler(time);
-                _logger.CurrentRiverRaceLog(log);
+                Response response = await _riverrace.CurrentRiverRaceScheduler(time);
+                _logger.CurrentRiverRaceLog(response);
                 await Task.CompletedTask;
             }
             catch (Exception)

@@ -95,9 +95,11 @@ namespace ClashRoyaleApi.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("NewValue")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("OldValue")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("Status")
@@ -121,6 +123,10 @@ namespace ClashRoyaleApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("ClanTag")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
@@ -135,10 +141,6 @@ namespace ClashRoyaleApi.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Tag")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -245,10 +247,10 @@ namespace ClashRoyaleApi.Migrations
                     b.Property<int>("SectionId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("timeStamp")
+                    b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("type")
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Guid");
@@ -305,6 +307,27 @@ namespace ClashRoyaleApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RiverRaceParticipant");
+                });
+
+            modelBuilder.Entity("ClashRoyaleApi.Models.Mail.MailSubscriptions", b =>
+                {
+                    b.Property<Guid>("Guid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ClanTag")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("MailType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SchedulerTime")
+                        .HasColumnType("int");
+
+                    b.HasKey("Guid");
+
+                    b.ToTable("MailSubscriptions");
                 });
 #pragma warning restore 612, 618
         }

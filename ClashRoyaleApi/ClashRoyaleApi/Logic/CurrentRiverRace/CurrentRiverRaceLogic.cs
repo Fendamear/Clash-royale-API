@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using ClashRoyaleApi.Data;
 using ClashRoyaleApi.DTOs.River_Race_Season_Log;
-using ClashRoyaleApi.Logic.Logging.LoggingModels;
 using ClashRoyaleApi.Models.CurrentRiverRace;
+using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
 using ClashRoyaleApi.Models.DbModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -81,9 +81,9 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
             return true;
         }
 
-        public async Task<CurrentRiverRaceLog> CurrentRiverRaceScheduler(SchedulerTime time)
+        public async Task<Response> CurrentRiverRaceScheduler(SchedulerTime time)
         {
-            CurrentRiverRaceLog res = new CurrentRiverRaceLog();    
+            Response res = new Response();
             try
             {
                 string response = await RoyaleApiCall();
@@ -95,15 +95,16 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                 int seasonId = GetSeasonId(log.sectionIndex, type);
                 string mergedString = seasonId + "." + log.sectionIndex + "." + dayOfWeek;
 
-                res.DayId = dayOfWeek;
-                res.SeasonId = seasonId;
-                res.SectionId = log.sectionIndex;
-                res.SchedulerTime = time.ToString();
+                res.log.DayId = dayOfWeek;
+                res.log.SeasonId = seasonId;
+                res.log.SectionId = log.sectionIndex;
+                res.log.SchedulerTime = time;
 
                 if (!_dataContext.CurrentRiverRace.Any(x => x.SeasonId == seasonId && x.SectionId == log.sectionIndex && x.DayId == dayOfWeek))
                 {
                     foreach (var item in log.clan.Participants)
                     {
+                        int DecksNotUsed = 4 - item.DecksUsedToday;
                         DbCurrentRiverRace race = new DbCurrentRiverRace()
                         {
                             Guid = Guid.NewGuid(),
@@ -115,10 +116,11 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                             Name = item.Name,
                             Fame = item.Fame,
                             DecksUsedToday = item.DecksUsedToday,
-                            DecksNotUsed = 4 - item.DecksUsedToday,
+                            DecksNotUsed = DecksNotUsed,
                             Schedule = time,
                         };
                         _dataContext.CurrentRiverRace.Add(race);
+                        res.nrOfAttacksRemaining.Add(new NrOfAttacksRemaining(item.Tag, item.Name, DecksNotUsed));
                     }
                     _dataContext.SaveChanges();
                 }
@@ -138,25 +140,27 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
 
                             if (race == null) continue;
 
+                            int DecksNotUsed = 4 - item.DecksUsedToday;
+
                             race.Fame = item.Fame;
-                            race.DecksNotUsed = 4 - item.DecksUsedToday;
+                            race.DecksNotUsed = DecksNotUsed;
                             race.DecksUsedToday = item.DecksUsedToday;
                             race.Schedule = time;
                             _dataContext.CurrentRiverRace.Update(race);
+                            res.nrOfAttacksRemaining.Add(new NrOfAttacksRemaining(item.Tag, item.Name, DecksNotUsed));
                         }
                         _dataContext.SaveChanges();
                     }
                 }
-                res.Exception = "event schedule successfull";
-                res.Status = Status.SUCCES;
-                res.TimeStamp = DateTime.Now;
+                res.log.Status = Status.SUCCES;
+                res.log.TimeStamp = DateTime.Now;
                 return res;
             }
             catch (Exception ex)
             {
-                res.Exception = ex.Message;
-                res.Status = Status.FAILED;
-                res.TimeStamp = DateTime.Now;
+                res.Exception = ex;
+                res.log.Status = Status.FAILED;
+                res.log.TimeStamp = DateTime.Now;
                 return res;
             }
         }

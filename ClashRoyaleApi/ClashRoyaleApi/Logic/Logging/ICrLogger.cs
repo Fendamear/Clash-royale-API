@@ -1,10 +1,10 @@
-﻿using ClashRoyaleApi.Logic.Logging.LoggingModels;
+﻿using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
 
 namespace ClashRoyaleApi.Logic.Logging
 {
     public interface ICrLogger
     {
-        void CurrentRiverRaceLog(CurrentRiverRaceLog log);
+        void CurrentRiverRaceLog(Response response);
 
     }
 }

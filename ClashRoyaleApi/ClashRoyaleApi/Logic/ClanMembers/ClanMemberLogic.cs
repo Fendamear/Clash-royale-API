@@ -51,14 +51,14 @@ namespace ClashRoyaleApi.Logic.ClanMembers
             { 
                 DbClanMembers dbClanMember;
                 //first flow check if there are any new unregisterd members
-                if (!allMembers.Any(t => t.Tag == member.Tag))
+                if (!allMembers.Any(t => t.ClanTag == member.Tag))
                 {
                     AddNewMember(member, format);
                     continue;
                 }
                 else
                 {
-                    dbClanMember = allMembers.FirstOrDefault(t => t?.Tag == member?.Tag);
+                    dbClanMember = allMembers.FirstOrDefault(t => t?.ClanTag == member?.Tag);
                 }            
 
                 DateTime LastSeen = DateTime.ParseExact(member.LastSeen, format, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AssumeUniversal);
@@ -67,13 +67,17 @@ namespace ClashRoyaleApi.Logic.ClanMembers
 
                 if(dbClanMember.Role != member.Role)
                 {
-                    _dataContext.RiverClanMemberLog.Add(AddLog(dbClanMember.Tag, dbClanMember.Name, EnumClass.MemberStatus.RoleChange, dbClanMember.Role, member.Role));
+                    _dataContext.RiverClanMemberLog.Add(AddLog(dbClanMember.ClanTag, dbClanMember.Name, EnumClass.MemberStatus.RoleChange, dbClanMember.Role, member.Role));
                     dbClanMember.Role = member.Role;
 
                 }
 
                 dbClanMember.LastSeen = LastSeen;
                 dbClanMember.IsActive = true;
+
+                if(!dbClanMember.IsInClan) 
+                    _dataContext.RiverClanMemberLog.Add(AddLog(member.Tag, member.Name, EnumClass.MemberStatus.Joined, string.Empty, "joined"));
+
                 dbClanMember.IsInClan = true;
 
                 _dataContext.DbClanMembers.Update(dbClanMember);
@@ -82,7 +86,7 @@ namespace ClashRoyaleApi.Logic.ClanMembers
 
             foreach (DbClanMembers member in allMembers)
             {
-                if(!list.Items.Any(t => t.Tag == member.Tag))
+                if(!list.Items.Any(t => t.Tag == member.ClanTag))
                 {
                     if(member.IsInClan) 
                         RemoveMember(member);
@@ -100,7 +104,7 @@ namespace ClashRoyaleApi.Logic.ClanMembers
 
                 response.Add(new GetClanMemberInfoDTO()
                 {
-                    Tag = member.Tag,
+                    Tag = member.ClanTag,
                     Name = member.Name,
                     Role = member.Role,
                     LastSeen = member.LastSeen,
@@ -152,7 +156,7 @@ namespace ClashRoyaleApi.Logic.ClanMembers
             DbClanMembers newMember = new DbClanMembers()
             {
                 Guid = Guid.NewGuid(),
-                Tag = member.Tag,
+                ClanTag = member.Tag,
                 Name = member.Name,
                 Role = member.Role,
                 LastSeen = DateTime.ParseExact(member.LastSeen, format, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AssumeUniversal),
@@ -172,7 +176,7 @@ namespace ClashRoyaleApi.Logic.ClanMembers
             member.IsInClan = false;
 
             _dataContext.DbClanMembers.Update(member);
-            _dataContext.RiverClanMemberLog.Add(AddLog(member.Tag, member.Name, EnumClass.MemberStatus.Removed, string.Empty, "Removed"));
+            _dataContext.RiverClanMemberLog.Add(AddLog(member.ClanTag, member.Name, EnumClass.MemberStatus.Removed, string.Empty, "Removed"));
             _dataContext.SaveChanges();
         }
 
@@ -192,11 +196,11 @@ namespace ClashRoyaleApi.Logic.ClanMembers
 
         private async Task<string> RoyaleApiCall()
         {
-            //string apiUrl = _configuration.GetSection("RoyaleAPI:HttpAdressClanInfo").Value!;
-            //string accessToken = _configuration.GetSection("RoyaleAPI:AccessToken").Value!;
+            string apiUrl = _configuration.GetSection("RoyaleAPI:HttpAdressClanInfo").Value!;
+            string accessToken = _configuration.GetSection("RoyaleAPI:AccessToken").Value!;
 
-            string apiUrl = "";
-            string accessToken = "";
+            //string apiUrl = "";
+            //string accessToken = "";
 
             _httpClient.BaseAdress = new Uri(apiUrl);
             _httpClient.AddDefaultRequestHeader("Bearer", accessToken);

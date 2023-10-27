@@ -139,3 +139,4 @@ C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\b
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Quartz.Extensions.Hosting.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\AutoMapper.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Json\MailSubscriptions.json

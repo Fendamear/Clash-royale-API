@@ -1,0 +1,165 @@
+.wrapper {
+    padding: 30px 50px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    margin: 10px auto;
+    max-width: 600px
+}
+
+.login100-form-btn {
+    font-family: Calibri;
+    font-size: 16px;
+    color: white;
+    line-height: 1.2;
+    text-transform: uppercase;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 100%;
+    height: 62px;
+    background-color: #33334C;
+    border-radius: 3px;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+.login100-form-title {
+    font-family: Calibri;
+    font-size: 30px;
+    color: #403866;
+    line-height: 1.2;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+
+/*.login100-form {
+    width: 100%;
+}*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+/*
+[ Padding ]
+*/
+
+.p-t-50 {
+    padding-top: 50px;
+}
+
+.p-b-35 {
+    padding-bottom: 35px;
+}
+
+.p-b-51 {
+    padding-bottom: 51px;
+}
+
+.p-b-90 {
+    padding-bottom: 90px;
+}
+
+/*
+[ MARGIN ]
+*/
+.m-t-17 {
+    margin-top: 17px;
+}
+
+.m-b-16 {
+    margin-bottom: 16px;
+}
+
+.loginform{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px var(--purple-standard);
+    width: 400px;
+    margin: auto;
+    color: #fff;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loginform-container{
+    text-align: center;
+}
+
+.loginform-header{
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.loginform-input input{
+    width: 80%;
+    font-size: 20px;
+    margin-bottom: 25px;
+    border: 2px solid var(--yellow-standard);
+    padding: 5px;
+    border-radius: 5px;
+    border-color: black;
+}
+
+.loginform-input input:focus{
+    outline: none;
+}
+
+.loginform-container button{
+    width: 30%;
+    font-size: 20px;
+    border-radius: 5px;
+    background-color: var(--yellow-standard);
+    border: 2px solid var(--white-standard);
+    padding: 5px 0;
+    color: var(--gray-dark);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.loginform-container button:hover{
+    background-color: var(--orange-hover);
+}
+
+.loginform-container button:active{
+    background-color: var(--yellow-standard);
+}
+
+.loginform-footer{
+    margin-top: 40px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.loginform-footer a{
+    color: var(--purple-light);
+    text-decoration: none;
+}
+
+.loginform-footer a:hover{
+    color: var(--purple-standard);
+}
+
+.loginform-footer a:active{
+    color: var(--white-standard);
+}

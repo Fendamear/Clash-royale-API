@@ -1,9 +1,11 @@
-﻿using ClashRoyaleApi.Logic.Logging.LoggingModels;
+﻿using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
 using ClashRoyaleApi.Models.DbModels;
+using ClashRoyaleApi.Models.Mail;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using static ClashRoyaleApi.Models.EnumClass;
 
 namespace ClashRoyaleApi.Data
 {
@@ -18,6 +20,15 @@ namespace ClashRoyaleApi.Data
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
+
+
+
 
         public DbSet<DbRiverRaceParticipant> RiverRaceParticipant { get; set;}
 
@@ -34,9 +45,24 @@ namespace ClashRoyaleApi.Data
         public DbSet<DbCurrentRiverRace> CurrentRiverRace { get; set;}
 
 
+        //mail
+
+        public DbSet<MailSubscriptions> MailSubscriptions { get; set; }
+
+
         //data entries for logging
 
-        public DbSet<CurrentRiverRaceLog> CurrentRiverRaceLogs { get; set; }    
+        public DbSet<CurrentRiverRaceLog> CurrentRiverRaceLogs { get; set; }
 
+        public List<DBUser> GetDBUsersWithMailSubscriptions(MailType mailType, SchedulerTime? schedulerTime)
+        {
+            var query = from user in DBUser
+                        join subscription in MailSubscriptions
+                        on user.ClanTag equals subscription.ClanTag
+                        where subscription.MailType == mailType && subscription.SchedulerTime == schedulerTime
+                        select user;
+
+            return query.ToList();
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using ClashRoyaleApi.Data;
-using ClashRoyaleApi.Logic.Logging.LoggingModels;
+using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
 
 namespace ClashRoyaleApi.Logic.Logging
 {
@@ -12,9 +12,9 @@ namespace ClashRoyaleApi.Logic.Logging
             _dataContext = context;      
         }
 
-        public void CurrentRiverRaceLog(CurrentRiverRaceLog log)
+        public void CurrentRiverRaceLog(Response response)
         {
-            _dataContext.CurrentRiverRaceLogs.Add(log);
+            _dataContext.CurrentRiverRaceLogs.Add(response.log);
             _dataContext.SaveChanges();
         }
 

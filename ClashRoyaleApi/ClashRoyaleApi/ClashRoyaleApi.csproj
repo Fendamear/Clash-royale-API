@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <Folder Include="DTOs\RiverRace\" />
+    <Folder Include="Logic\Logging\LoggingModels\" />
   </ItemGroup>
 
 </Project>

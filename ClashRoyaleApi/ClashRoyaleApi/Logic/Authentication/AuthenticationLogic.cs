@@ -20,7 +20,7 @@ namespace ClashRoyaleApi.Logic.Authentication
 
         public ClanTagDTO RegisterWithClanTag(string clanTag) 
         {
-            if (!_dataContext.DbClanMembers.Any(t => t.Tag == clanTag)) throw new Exception("clan tag does not exist within herres");
+            if (!_dataContext.DbClanMembers.Any(t => t.ClanTag == clanTag)) throw new Exception("clan tag does not exist within herres");
             if (_dataContext.DBUser.Any(t => t.ClanTag == clanTag)) throw new Exception("this clantag is already linked to a user!");
 
             return new ClanTagDTO(clanTag);
@@ -41,7 +41,7 @@ namespace ClashRoyaleApi.Logic.Authentication
                 }
             }
 
-            DbClanMembers member = _dataContext.DbClanMembers.FirstOrDefault(t => t.Tag == register.ClanTag);
+            DbClanMembers member = _dataContext.DbClanMembers.FirstOrDefault(t => t.ClanTag == register.ClanTag);
 
             string password = BCrypt.Net.BCrypt.HashPassword(register.Password);
             Guid id = Guid.NewGuid();

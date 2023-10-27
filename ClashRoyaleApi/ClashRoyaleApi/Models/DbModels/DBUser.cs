@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClashRoyaleApi.Models.DbModels
 {
@@ -8,6 +9,7 @@ namespace ClashRoyaleApi.Models.DbModels
         public Guid Id { get; set; }
 
         [Required]
+        [ForeignKey("dbclanmembers")]
         public string ClanTag { get; set; } 
 
         [Required]

@@ -1,24 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
+import MailSubScription from './Components/MailSubscription/mailsubscription';
+import {  Route, Routes, BrowserRouter as Router } from 'react-router-dom';
+import Sidebar from './Components/Layout/Sidebar';
+import HomePage from './Components/Layout/Homepage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+    <Sidebar />
+      <Routes>
+      <Route path='/' element={<HomePage />} />
+      <Route path='/MailSubscription' element={<MailSubScription />} />
+      {/* <Route path='/calendar' element={<Race />} />
+      <Route path='/Account/:id' element={<Account />} />
+      <Route path='/home/predictions' element={<Account />} />
+      <Route path='/Login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
+      <Route path='/prediction/season' element={<LeagueList />} />
+      <Route path='/prediction/season/find' element={<FindLeague />} />
+      <Route path='/prediction/season/:id/drivers' element={<PredictionLeague />} />
+      <Route path='/prediction/season/:id' element={<League />} />
+      <Route path='/prediction/season/league/chat/:id' element={<ChatRoom />} />
+      <Route path='*' element={<NotFound />} /> */}
+    </Routes>
+   </Router>
   );
 }
 

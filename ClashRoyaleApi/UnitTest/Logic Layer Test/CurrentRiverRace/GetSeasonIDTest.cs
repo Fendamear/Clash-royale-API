@@ -40,7 +40,7 @@ namespace UnitTest.Logic_Layer_Test.CurrentRiverRace
             var type = PeriodType.COLLOSEUM;
 
             // Set up the mock data context to return a null lastRecord (indicating no existing records).
-            _dataContextMock.Setup(x => x.RiverRaceLogs).Returns(_helperClass.GetCurrentRiverRaceLog(sectionId, type);
+            //_dataContextMock.Setup(x => x.RiverRaceLogs).Returns(_helperClass.GetCurrentRiverRaceLog(sectionId, type);
             var currentRiverRace = new CurrentRiverRaceLogic(_dataContextMock.Object);
 
             // Act

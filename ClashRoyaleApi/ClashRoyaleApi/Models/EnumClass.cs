@@ -24,7 +24,7 @@ namespace ClashRoyaleApi.Models
 
         public enum SchedulerTime
         {
-            Schedule0800,
+            SCHEDULE0800,
             SCHEDULE1030,
             SCHEDULE1100,
             SCHEDULE1130,
@@ -34,6 +34,12 @@ namespace ClashRoyaleApi.Models
         {
             SUCCES,
             FAILED
+        }
+
+        public enum MailType
+        {
+            BUILD,
+            ATTACKSREMAINING
         }
     }
 }
