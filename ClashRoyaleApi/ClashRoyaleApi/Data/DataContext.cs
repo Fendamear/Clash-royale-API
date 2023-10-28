@@ -36,14 +36,13 @@ namespace ClashRoyaleApi.Data
 
         public DbSet<DbClanMemberLog> RiverClanMemberLog { get; set; }
 
-        public DbSet<DbClanMembers> DbClanMembers { get; set; }
+        public virtual DbSet<DbClanMembers> DbClanMembers { get; set; }
 
         public DbSet<DBUser> DBUser { get; set; }   
 
-        public DbSet<DbRiverRaceLog> RiverRaceLogs { get; set; }
+        public virtual DbSet<DbRiverRaceLog> RiverRaceLogs { get; set; }
 
-        public DbSet<DbCurrentRiverRace> CurrentRiverRace { get; set;}
-
+        public virtual DbSet<DbCurrentRiverRace> CurrentRiverRace { get; set;}
 
         //mail
 

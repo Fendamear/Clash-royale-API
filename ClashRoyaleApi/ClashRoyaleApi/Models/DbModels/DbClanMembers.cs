@@ -25,5 +25,17 @@ namespace ClashRoyaleApi.Models.DbModels
 
         public bool IsInClan { get; set; }
 
+        public DbClanMembers() { }
+
+        public DbClanMembers(string clanTag, string name, string role, DateTime lastSeen, bool isActive, bool isInClan)
+        {
+            Guid = Guid.NewGuid();
+            ClanTag = clanTag;
+            Name = name;
+            Role = role;
+            LastSeen = lastSeen;
+            IsActive = isActive;
+            IsInClan = isInClan;
+        }
     }
 }

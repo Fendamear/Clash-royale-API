@@ -1,6 +1,7 @@
 ﻿using ClashRoyaleApi.DTOs.River_Race_Season_Log;
 using ClashRoyaleApi.Models.CurrentRiverRace;
 using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
+using ClashRoyaleApi.Models.DbModels;
 using static ClashRoyaleApi.Models.EnumClass;
 
 namespace ClashRoyaleApi.Logic.CurrentRiverRace
@@ -18,5 +19,11 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
         Task<bool> DeleteRiverRaceLog(int seasonId, int sectionId);
 
         int GetSeasonId(int sectionId, PeriodType type);
+
+        List<NrOfAttacksRemaining> UpdateExistingRiverRaceData(Root log, int seasonId, int dayOfWeek, SchedulerTime time);
+
+        List<NrOfAttacksRemaining> AddRiverRaceData(Root log, int seasonId, int dayOfWeek, SchedulerTime time);
+
+        DbRiverRaceLog GetRRSeasonLogBySeasonAndSectionID(int seasonId, int sectionId); 
     }
 }

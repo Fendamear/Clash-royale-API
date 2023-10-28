@@ -16,6 +16,7 @@ using ClashRoyaleApi.Logic.RoyaleApi;
 using ClashRoyaleApi.Logic.MailHandler;
 using ClashRoyaleApi.Logic.MailHandler.MailSubscription;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -32,10 +33,6 @@ builder.Services.AddCors(options =>
                           policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
                       });
 });
-
-
-
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -61,6 +58,9 @@ builder.Services.AddScoped<IHttpClientWrapper, HttpClientWrapper>();
 builder.Services.AddScoped<HttpClient, HttpClient>();
 builder.Services.AddScoped<IMailHandler, MailHandlerLogic>();
 builder.Services.AddScoped<IMailSubscription, MailSubscriptionLogic>();
+//builder.Services.AddHttpClient<HttpClient>();
+
+
 
 builder.Services.AddQuartz(q =>
 {

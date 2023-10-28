@@ -27,7 +27,7 @@ namespace ClashRoyaleApi.Controllers
         {
             try
             {
-                _mailHandler.SendEmail(await _currentRiverRace.CurrentRiverRaceScheduler(time));
+                //_mailHandler.SendEmail(await _currentRiverRace.CurrentRiverRaceScheduler(time));
                 return Ok();
             }
             catch (Exception ex)

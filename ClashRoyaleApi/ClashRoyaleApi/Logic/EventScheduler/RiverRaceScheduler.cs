@@ -23,8 +23,8 @@ namespace ClashRoyaleApi.Logic.EventScheduler
             try
             {
                 SchedulerTime time = (SchedulerTime)context.MergedJobDataMap.Values.First();
-                Response response = await _riverrace.CurrentRiverRaceScheduler(time);
-                _logger.CurrentRiverRaceLog(response);
+                //Response response = await _riverrace.CurrentRiverRaceScheduler(time);
+                //_logger.CurrentRiverRaceLog(response);
                 await Task.CompletedTask;
             }
             catch (Exception)

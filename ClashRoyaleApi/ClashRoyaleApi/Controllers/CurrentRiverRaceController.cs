@@ -13,7 +13,6 @@ namespace ClashRoyaleApi.Controllers
             _currentRiverRace = currentRiverRace;
         }
 
-
         [HttpGet("/currentriverrace")]
         public ActionResult GetCurrentRiverRace(SchedulerTime time)
         {

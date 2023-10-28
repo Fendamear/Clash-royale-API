@@ -6,9 +6,11 @@
 
         Uri BaseAdress { get; set; }
 
-        void AddDefaultRequestHeader(string name, string value);
+        void AddAuthorizationRequestHeader(string name, string value);
 
         void ClearDefaultRequestHeaders();
+
+        Task<string> RoyaleApiCall(string apiUrl, string accesstoken);
 
     }
 }

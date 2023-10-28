@@ -28,13 +28,12 @@ namespace ClashRoyaleApi.Logic.ClanMembers
         }    
 
         //testing constructor
-        public ClanMemberLogic(DataContext context, IHttpClientWrapper wrapper) 
+        public ClanMemberLogic(DataContext context) 
         {
             _dataContext = context;
-            _httpClient = wrapper;
         }
 
-        public async Task RetrieveClanInfoScheduler()
+        public async Task<List<DbClanMembers>> RetrieveClanInfoScheduler()
         {
             string response = await RoyaleApiCall();
             var list = JsonConvert.DeserializeObject<Root>(response);
@@ -46,6 +45,7 @@ namespace ClashRoyaleApi.Logic.ClanMembers
             DateTime Inactive = DateTime.Now.AddDays(-7);
 
             List<DbClanMembers> allMembers = GetAllClanMembers();
+            List<DbClanMembers> res = new List<DbClanMembers>();
 
             foreach (var member in list.Items)
             { 
@@ -63,35 +63,45 @@ namespace ClashRoyaleApi.Logic.ClanMembers
 
                 DateTime LastSeen = DateTime.ParseExact(member.LastSeen, format, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AssumeUniversal);
 
-                if (LastSeen < Inactive) dbClanMember.IsActive = false;
-
-                if(dbClanMember.Role != member.Role)
+                if (LastSeen < Inactive)
                 {
-                    _dataContext.RiverClanMemberLog.Add(AddLog(dbClanMember.ClanTag, dbClanMember.Name, EnumClass.MemberStatus.RoleChange, dbClanMember.Role, member.Role));
-                    dbClanMember.Role = member.Role;
+                    dbClanMember.IsActive = false;
+                }
+                else
+                {
+                    dbClanMember.IsActive = true;
+                }
 
+                if (dbClanMember.Role != member.Role)
+                {
+                    AddLog(dbClanMember.ClanTag, dbClanMember.Name, EnumClass.MemberStatus.RoleChange, dbClanMember.Role, member.Role);
+                    dbClanMember.Role = member.Role;
                 }
 
                 dbClanMember.LastSeen = LastSeen;
-                dbClanMember.IsActive = true;
 
-                if(!dbClanMember.IsInClan) 
-                    _dataContext.RiverClanMemberLog.Add(AddLog(member.Tag, member.Name, EnumClass.MemberStatus.Joined, string.Empty, "joined"));
+                if (!dbClanMember.IsInClan)
+                    AddLog(member.Tag, member.Name, EnumClass.MemberStatus.Joined, string.Empty, "joined");
 
                 dbClanMember.IsInClan = true;
 
                 _dataContext.DbClanMembers.Update(dbClanMember);
                 _dataContext.SaveChanges();
+                res.Add(dbClanMember);
             }
 
             foreach (DbClanMembers member in allMembers)
             {
                 if(!list.Items.Any(t => t.Tag == member.ClanTag))
                 {
-                    if(member.IsInClan) 
+                    if(member.IsInClan)
+                    {
                         RemoveMember(member);
+                        allMembers.Remove(member);
+                    }                    
                 }
             }
+            return res;
         }
 
         public async Task<List<GetClanMemberInfoDTO>> GetClanMemberInfo()
@@ -146,12 +156,12 @@ namespace ClashRoyaleApi.Logic.ClanMembers
             await _dataContext.SaveChangesAsync();
         }
 
-        private List<DbClanMembers> GetAllClanMembers()
+        public virtual List<DbClanMembers> GetAllClanMembers()
         {
             return _dataContext.DbClanMembers.ToList();
         }
 
-        private void AddNewMember(Member member, string format)
+        public virtual void AddNewMember(Member member, string format)
         {
             DbClanMembers newMember = new DbClanMembers()
             {
@@ -165,7 +175,7 @@ namespace ClashRoyaleApi.Logic.ClanMembers
             };
 
             _dataContext.DbClanMembers.Add(newMember);
-            _dataContext.RiverClanMemberLog.Add(AddLog(member.Tag, member.Name, EnumClass.MemberStatus.Joined, string.Empty, "joined"));
+            AddLog(member.Tag, member.Name, EnumClass.MemberStatus.Joined, string.Empty, "joined");
             _dataContext.SaveChanges();
         }
 
@@ -176,13 +186,13 @@ namespace ClashRoyaleApi.Logic.ClanMembers
             member.IsInClan = false;
 
             _dataContext.DbClanMembers.Update(member);
-            _dataContext.RiverClanMemberLog.Add(AddLog(member.ClanTag, member.Name, EnumClass.MemberStatus.Removed, string.Empty, "Removed"));
+            AddLog(member.ClanTag, member.Name, EnumClass.MemberStatus.Removed, string.Empty, "Removed");
             _dataContext.SaveChanges();
         }
 
-        private DbClanMemberLog AddLog(string tag, string name, EnumClass.MemberStatus status, string oldValue, string newValue)
+        public virtual void AddLog(string tag, string name, EnumClass.MemberStatus status, string oldValue, string newValue)
         {
-            return new DbClanMemberLog()
+            DbClanMemberLog log = new DbClanMemberLog()
             {
                 Guid = Guid.NewGuid(),
                 Tag = tag,
@@ -192,9 +202,11 @@ namespace ClashRoyaleApi.Logic.ClanMembers
                 NewValue = newValue,
                 Time = DateTime.Now,
             };
+            _dataContext.RiverClanMemberLog.Add(log);
+            _dataContext.SaveChanges();
         }
 
-        private async Task<string> RoyaleApiCall()
+        public virtual async Task<string> RoyaleApiCall()
         {
             string apiUrl = _configuration.GetSection("RoyaleAPI:HttpAdressClanInfo").Value!;
             string accessToken = _configuration.GetSection("RoyaleAPI:AccessToken").Value!;
@@ -203,7 +215,7 @@ namespace ClashRoyaleApi.Logic.ClanMembers
             //string accessToken = "";
 
             _httpClient.BaseAdress = new Uri(apiUrl);
-            _httpClient.AddDefaultRequestHeader("Bearer", accessToken);
+            _httpClient.AddAuthorizationRequestHeader("Bearer", accessToken);
 
             try
             {

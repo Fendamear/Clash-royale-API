@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ClashRoyaleApi.Data;
 using ClashRoyaleApi.DTOs.River_Race_Season_Log;
+using ClashRoyaleApi.Logic.RoyaleApi;
 using ClashRoyaleApi.Models.CurrentRiverRace;
 using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
 using ClashRoyaleApi.Models.DbModels;
@@ -16,14 +17,12 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
     {
 
         private readonly IConfiguration _configuration;
-        private readonly IMapper _Mapper;
         private readonly DataContext _dataContext;    
 
-        public CurrentRiverRaceLogic (IConfiguration configuration, DataContext context, IMapper mapper)
+        public CurrentRiverRaceLogic (IConfiguration configuration, DataContext context)
         {
             _configuration = configuration;
             _dataContext = context;
-            _Mapper = mapper;
         }
 
         public CurrentRiverRaceLogic(DataContext context)
@@ -81,79 +80,48 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
             return true;
         }
 
+        public DbRiverRaceLog GetRRSeasonLogBySeasonAndSectionID(int seasonId, int sectionId)
+        {
+            return _dataContext.RiverRaceLogs.Where(x => x.SeasonId == seasonId && x.SectionId == sectionId).FirstOrDefault();
+        }
+
+
         public async Task<Response> CurrentRiverRaceScheduler(SchedulerTime time)
         {
             Response res = new Response();
             try
             {
                 string response = await RoyaleApiCall();
+                //string response = await _httpClientWrapper.RoyaleApiCall();
+                //string response = File.ReadAllText("./currenrriverrace.json");
                 var log = JsonConvert.DeserializeObject<Root>(response);
+
+                if (log == null) throw new ArgumentNullException("the api call did not provide any data");
 
                 PeriodType type = (PeriodType)Enum.Parse(typeof(PeriodType), log.periodType, true);
 
                 int dayOfWeek = GetDayOfWeek();
                 int seasonId = GetSeasonId(log.sectionIndex, type);
-                string mergedString = seasonId + "." + log.sectionIndex + "." + dayOfWeek;
 
-                res.log.DayId = dayOfWeek;
-                res.log.SeasonId = seasonId;
-                res.log.SectionId = log.sectionIndex;
-                res.log.SchedulerTime = time;
+                var mergedString = $"{seasonId}.{log.sectionIndex}.{dayOfWeek}";
 
-                if (!_dataContext.CurrentRiverRace.Any(x => x.SeasonId == seasonId && x.SectionId == log.sectionIndex && x.DayId == dayOfWeek))
+                res.log = new CurrentRiverRaceLog()
                 {
-                    foreach (var item in log.clan.Participants)
-                    {
-                        int DecksNotUsed = 4 - item.DecksUsedToday;
-                        DbCurrentRiverRace race = new DbCurrentRiverRace()
-                        {
-                            Guid = Guid.NewGuid(),
-                            SeasonId = seasonId,
-                            SectionId = log.sectionIndex,
-                            DayId = dayOfWeek,
-                            SeasonSectionDay = mergedString,
-                            Tag = item.Tag,
-                            Name = item.Name,
-                            Fame = item.Fame,
-                            DecksUsedToday = item.DecksUsedToday,
-                            DecksNotUsed = DecksNotUsed,
-                            Schedule = time,
-                        };
-                        _dataContext.CurrentRiverRace.Add(race);
-                        res.nrOfAttacksRemaining.Add(new NrOfAttacksRemaining(item.Tag, item.Name, DecksNotUsed));
-                    }
-                    _dataContext.SaveChanges();
+                    DayId = dayOfWeek,
+                    SeasonId = seasonId,
+                    SectionId = log.sectionIndex,
+                    SchedulerTime = time
+                };
+
+                if (!RiverRaceExists(seasonId, log.sectionIndex, dayOfWeek))
+                {
+                    AddRiverRaceData(log, seasonId, dayOfWeek, time);
                 }
                 else
                 {
-                    var lastRecord = _dataContext.CurrentRiverRace.OrderBy(x => x.SeasonId == seasonId && x.SectionId == log.sectionIndex && x.DayId == dayOfWeek).FirstOrDefault();
-
-                    if (lastRecord == null) throw new Exception("this river race day does not exist");
-                    if (time > lastRecord.Schedule)
-                    {
-
-                        List<DbCurrentRiverRace> currentRiverRace = _dataContext.CurrentRiverRace.Where(x => x.SeasonId == seasonId && x.SectionId == log.sectionIndex && x.DayId == dayOfWeek).ToList();
-
-                        foreach (var item in log.clan.Participants)
-                        {
-                            DbCurrentRiverRace race = currentRiverRace.FirstOrDefault(x => x.Tag == item.Tag);
-
-                            if (race == null) continue;
-
-                            int DecksNotUsed = 4 - item.DecksUsedToday;
-
-                            race.Fame = item.Fame;
-                            race.DecksNotUsed = DecksNotUsed;
-                            race.DecksUsedToday = item.DecksUsedToday;
-                            race.Schedule = time;
-                            _dataContext.CurrentRiverRace.Update(race);
-                            res.nrOfAttacksRemaining.Add(new NrOfAttacksRemaining(item.Tag, item.Name, DecksNotUsed));
-                        }
-                        _dataContext.SaveChanges();
-                    }
+                    UpdateExistingRiverRaceData(log, seasonId, dayOfWeek, time);
                 }
-                res.log.Status = Status.SUCCES;
-                res.log.TimeStamp = DateTime.Now;
+
                 return res;
             }
             catch (Exception ex)
@@ -165,35 +133,68 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
             }
         }
 
-        private async Task<string> RoyaleApiCall()
+        public bool RiverRaceExists(int seasonId, int sectionIndex, int dayOfWeek)
         {
-            string apiUrl = _configuration.GetSection("RoyaleAPI:HttpAdressCurrentRiverRace").Value!;
-            string accessToken = _configuration.GetSection("RoyaleAPI:AccessToken").Value!;
+            return _dataContext.CurrentRiverRace.Any(x => x.SeasonId == seasonId && x.SectionId == sectionIndex && x.DayId == dayOfWeek);
+        }
 
-            using (HttpClient httpClient = new HttpClient())
+        public List<NrOfAttacksRemaining> AddRiverRaceData(Root log, int seasonId, int dayOfWeek, SchedulerTime time)
+        {
+            List<NrOfAttacksRemaining> attacksRemainings = new List<NrOfAttacksRemaining>();
+            foreach (var item in log.clan.Participants)
             {
-                httpClient.BaseAddress = new Uri(apiUrl);
-
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-                try
+                int decksNotUsed = 4 - item.DecksUsedToday;
+                var race = new DbCurrentRiverRace
                 {
-                    HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return await response.Content.ReadAsStringAsync();
-                    }
-                    else
-                    {
-                        throw new Exception("failed with status " + response.StatusCode);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
+                    Guid = Guid.NewGuid(),
+                    SeasonId = seasonId,
+                    SectionId = log.sectionIndex,
+                    DayId = dayOfWeek,
+                    SeasonSectionDay = $"{seasonId}.{log.sectionIndex}.{dayOfWeek}",
+                    Tag = item.Tag,
+                    Name = item.Name,
+                    Fame = item.Fame,
+                    DecksUsedToday = item.DecksUsedToday,
+                    DecksNotUsed = decksNotUsed,
+                    Schedule = time
+                };
+                _dataContext.CurrentRiverRace.Add(race);
+                attacksRemainings.Add(new NrOfAttacksRemaining(item.Tag, item.Name, decksNotUsed));
             }
+            _dataContext.SaveChanges();
+            return attacksRemainings;
+        }
+
+        public List<NrOfAttacksRemaining> UpdateExistingRiverRaceData(Root log, int seasonId, int dayOfWeek, SchedulerTime time)
+        {
+            //var lastRecord = _dataContext.CurrentRiverRace.OrderBy(x => x.SeasonId == seasonId && x.SectionId == log.sectionIndex && x.DayId == dayOfWeek).FirstOrDefault();
+            var currentRiverRace = _dataContext.CurrentRiverRace.Where(x => x.SeasonId == seasonId && x.SectionId == log.sectionIndex && x.DayId == dayOfWeek).ToList();
+
+            if (currentRiverRace.Count == 0) throw new ArgumentNullException("This river race day does not exist");
+
+            List<NrOfAttacksRemaining> attacksRemainings = new List<NrOfAttacksRemaining>();
+            DbCurrentRiverRace lastRecord = currentRiverRace.FirstOrDefault();
+
+            if (time < lastRecord.Schedule) return attacksRemainings;
+           
+            foreach (var item in log.clan.Participants)
+            {
+                var race = currentRiverRace.FirstOrDefault(x => x.Tag == item.Tag);
+
+                if (race == null) continue;
+
+                int decksNotUsed = 4 - item.DecksUsedToday;
+
+                race.Fame = item.Fame;
+                race.DecksNotUsed = decksNotUsed;
+                race.DecksUsedToday = item.DecksUsedToday;
+                race.Schedule = time;
+                _dataContext.CurrentRiverRace.Update(race);
+                attacksRemainings.Add(new NrOfAttacksRemaining(item.Tag, item.Name, decksNotUsed));
+            }
+            _dataContext.SaveChanges();
+            return attacksRemainings;
+
         }
 
         private static int GetDayOfWeek()
@@ -219,53 +220,66 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
         {
             var lastRecord = _dataContext.RiverRaceLogs.OrderByDescending(t => t.TimeStamp).FirstOrDefault();
 
-            if(lastRecord == null)
-            {
-                DbRiverRaceLog log = new DbRiverRaceLog()
-                {
-                    Guid = Guid.NewGuid(),
-                    SeasonId = lastRecord.SeasonId,
-                    SectionId = sectionId,
-                    TimeStamp = DateTime.Now,
-                    Type = type
-                };
-                _dataContext.RiverRaceLogs.Add(log);     
-                _dataContext.SaveChanges();
-                lastRecord = log;
-            }
-
+            if (lastRecord.SeasonId == 0 || lastRecord == null) throw new ArgumentNullException("River race log not found");
             if (lastRecord.SectionId == sectionId) return lastRecord.SeasonId;
             if (type == PeriodType.TRAINING) throw new Exception("this method was called at a training day");
 
+            DbRiverRaceLog log = new DbRiverRaceLog()
+            {
+                Guid = Guid.NewGuid(),
+                SectionId = sectionId,
+                TimeStamp = DateTime.Now,
+                Type = type
+            };
+
             if(lastRecord.Type == PeriodType.COLLOSEUM)
             {
-                //write to database, sectionID + 1
+                //write to database, seasonID + 1
                 int newSeasonID = lastRecord.SeasonId + 1;
+                log.SeasonId = newSeasonID;
 
-                _dataContext.Add(new DbRiverRaceLog()
-                {
-                    Guid = Guid.NewGuid(),
-                    SectionId = sectionId,
-                    SeasonId = newSeasonID,
-                    TimeStamp = DateTime.Now,
-                    Type = type
-                });
+                _dataContext.Add(log);
                 _dataContext.SaveChanges();
                 return newSeasonID;
             }
             else
             {
                 //write to database with current section ID
-                _dataContext.Add(new DbRiverRaceLog()
-                {
-                    Guid = Guid.NewGuid(),
-                    SectionId = sectionId,
-                    SeasonId = lastRecord.SeasonId,
-                    TimeStamp = DateTime.Now,
-                    Type = type
-                });
+                log.SeasonId = lastRecord.SeasonId;
+
+                _dataContext.Add(log);
                 _dataContext.SaveChanges();
                 return lastRecord.SeasonId;
+            }
+        }
+
+        private async Task<string> RoyaleApiCall()
+        {
+            string apiUrl = _configuration.GetSection("RoyaleAPI:HttpAdressCurrentRiverRace").Value!;
+            string accessToken = _configuration.GetSection("RoyaleAPI:AccessToken").Value!;
+
+            HttpClient httpClient = new HttpClient();
+
+            httpClient.BaseAddress = new Uri(apiUrl);
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            try
+            {
+                HttpResponseMessage response = httpClient.GetAsync(apiUrl).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    throw new Exception("Failed with status " + response.StatusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
     }
