@@ -8,6 +8,6 @@ namespace ClashRoyaleApi.Logic.Authentication
         ClanTagDTO RegisterWithClanTag(string clanTag);
         Task<CreateUserDTO> RegisterUser(CreateUserDTO register);
 
-        Task<List<ClanTagNameDTO>> GetAllClanTagsWithName();
+        Task<List<ClanTagNameDTO>> GetAllClanTagsWithNameFromDbClanMemberDb();
     }
 }

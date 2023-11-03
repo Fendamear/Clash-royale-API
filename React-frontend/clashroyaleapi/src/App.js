@@ -4,6 +4,7 @@ import MailSubScription from './Components/MailSubscription/mailsubscription';
 import {  Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import Sidebar from './Components/Layout/Sidebar';
 import HomePage from './Components/Layout/Homepage';
+import RegisterWithClanTag from './Components/Register/RegisterWithClanTag';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
       <Route path='/' element={<HomePage />} />
       <Route path='/MailSubscription' element={<MailSubScription />} />
+      <Route path='/Register' element={<RegisterWithClanTag />} />
       {/* <Route path='/calendar' element={<Race />} />
       <Route path='/Account/:id' element={<Account />} />
       <Route path='/home/predictions' element={<Account />} />

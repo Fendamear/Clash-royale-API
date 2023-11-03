@@ -64,21 +64,50 @@ builder.Services.AddScoped<IMailSubscription, MailSubscriptionLogic>();
 
 builder.Services.AddQuartz(q =>
 {
-    var jobKey = new JobKey("RiverRaceSchedular");
+    var jobKeyCRR = new JobKey("RiverRaceScheduler");
+    var jobKeyCI = new JobKey("ClanMemberInfo");
 
-    q.AddJob<RiverRaceScheduler>(opts => opts.WithIdentity(jobKey));
+    TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+    DateTime utcTime5MinutesBefore = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 30, 0), localTimeZone);
+    DateTime utcTime30MinutesBefore = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0), localTimeZone);
+    DateTime utcTime1HourBefore = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 30, 0), localTimeZone);
+    DateTime utcTime2HoursBefore = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 30, 0), localTimeZone);
+    DateTime utcTime3HoursBefore = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 30, 0), localTimeZone);
 
-    q.AddTrigger(opts => opts.ForJob(jobKey).UsingJobData("param", (int)SchedulerTime.SCHEDULE1030)
-    .WithIdentity("riverRaceSchedular-1030")
-    .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(11, 25,
-        new[] { DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday }
-    )));
+    q.AddJob<RiverRaceScheduler>(opts => opts.WithIdentity(jobKeyCRR));
+    q.AddJob<ClanMemberInfoScheduler>(opts => opts.WithIdentity(jobKeyCI));
 
-    q.AddTrigger(opts => opts.ForJob(jobKey).UsingJobData("param", (int)SchedulerTime.SCHEDULE1130)
-    .WithIdentity("riverRaceSchedular-1130")
-    .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(21, 28,
-        new[] { DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday }
-    )));
+    q.AddTrigger(opts => opts.ForJob(jobKeyCI)
+    .WithIdentity("ClanMemberInfo-1030")
+    .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(18, utcTime5MinutesBefore.Minute,
+        new[] { DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday }).InTimeZone(localTimeZone)));
+
+    //scheduler for current river race
+
+    q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE5)
+    .WithIdentity("riverRaceSchedelar-0930")
+    .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(utcTime5MinutesBefore.Hour, utcTime5MinutesBefore.Minute)
+    .InTimeZone(localTimeZone)));
+
+    q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE30)
+        .WithIdentity("riverRaceSchedelar-0900")
+        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(utcTime30MinutesBefore.Hour, utcTime30MinutesBefore.Minute)
+        .InTimeZone(localTimeZone)));
+
+    q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE60)
+        .WithIdentity("riverRaceSchedelar-0830")
+        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(utcTime1HourBefore.Hour, utcTime1HourBefore.Minute)
+        .InTimeZone(localTimeZone)));
+
+    q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE120)
+        .WithIdentity("riverRaceSchedelar-0730")
+        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(utcTime2HoursBefore.Hour, utcTime2HoursBefore.Minute)
+        .InTimeZone(localTimeZone)));
+
+    q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE180)
+        .WithIdentity("riverRaceSchedelar-0630")
+        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(utcTime3HoursBefore.Hour, utcTime3HoursBefore.Minute)
+        .InTimeZone(localTimeZone)));
 });
 builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 

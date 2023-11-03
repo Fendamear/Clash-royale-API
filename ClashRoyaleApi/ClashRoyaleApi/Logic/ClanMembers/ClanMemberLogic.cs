@@ -35,7 +35,8 @@ namespace ClashRoyaleApi.Logic.ClanMembers
 
         public async Task<List<DbClanMembers>> RetrieveClanInfoScheduler()
         {
-            string response = await RoyaleApiCall();
+            throw new ArgumentException("this is a test exception");
+            string response = await _httpClient.RoyaleApiCall(EnumClass.RoyaleApiType.CLANMEMBERINFO);
             var list = JsonConvert.DeserializeObject<Root>(response);
 
             //string text = File.ReadAllText("./claninfo.json");
@@ -204,36 +205,6 @@ namespace ClashRoyaleApi.Logic.ClanMembers
             };
             _dataContext.RiverClanMemberLog.Add(log);
             _dataContext.SaveChanges();
-        }
-
-        public virtual async Task<string> RoyaleApiCall()
-        {
-            string apiUrl = _configuration.GetSection("RoyaleAPI:HttpAdressClanInfo").Value!;
-            string accessToken = _configuration.GetSection("RoyaleAPI:AccessToken").Value!;
-
-            //string apiUrl = "";
-            //string accessToken = "";
-
-            _httpClient.BaseAdress = new Uri(apiUrl);
-            _httpClient.AddAuthorizationRequestHeader("Bearer", accessToken);
-
-            try
-            {
-                HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return await response.Content.ReadAsStringAsync();
-                }
-                else
-                {
-                    throw new Exception("Failed with status " + response.StatusCode);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
         }
     }
 }

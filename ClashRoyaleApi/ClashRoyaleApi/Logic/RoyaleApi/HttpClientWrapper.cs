@@ -1,66 +1,69 @@
-﻿using System.Net.Http.Headers;
+﻿using Microsoft.Extensions.ObjectPool;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using static ClashRoyaleApi.Models.EnumClass;
 
 namespace ClashRoyaleApi.Logic.RoyaleApi
 {
     public class HttpClientWrapper : IHttpClientWrapper
     {
-        private readonly HttpClient httpClient;
+        private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
 
         public HttpClientWrapper(HttpClient httpClient, IConfiguration configuration)
         {
-            this.httpClient = httpClient;
+            this._httpClient = httpClient;
             this._configuration = configuration;
         }
-
-        public Uri BaseAdress { get => httpClient.BaseAddress; set => httpClient.BaseAddress = value; }
-
-        public void AddAuthorizationRequestHeader(string name, string value)
+        
+        public virtual async Task<string> RoyaleApiCall(RoyaleApiType type)
         {
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(name, value);
-        }
+            string apiUrl = GetApiUrl(type);
+            string accessToken = _configuration.GetSection("RoyaleAPI:AccessToken").Value!;
 
-        public void ClearDefaultRequestHeaders()
-        {
-            httpClient.DefaultRequestHeaders.Clear();
-        }
+            _httpClient.BaseAddress = new Uri(apiUrl);  
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-        public async Task<HttpResponseMessage> GetAsync(string requestUri)
-        {
-            return await httpClient.GetAsync(requestUri);
-        }
-
-        public async Task<string> RoyaleApiCall(string apiUrl, string accessToken)
-        {
-            using (HttpClient httpClient = new HttpClient())
+            try
             {
-                httpClient.BaseAddress = new Uri(apiUrl);
+                HttpResponseMessage response = _httpClient.GetAsync(apiUrl).Result;
 
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-                try
+                if (response.IsSuccessStatusCode)
                 {
-                    HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string res = await response.Content.ReadAsStringAsync();
-                        httpClient.Dispose();
-                        return res;
-                        
-                    }
-                    else
-                    {
-                        throw new Exception("failed with status " + response.StatusCode);
-                    }
+                    return await response.Content.ReadAsStringAsync();
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw;
+                    throw new Exception("Failed with status " + response.StatusCode);
                 }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
 
+        public virtual async Task<string> RoyaleApiCall(RoyaleApiType type, string[] variables)
+        {
+            throw new NotImplementedException();
+        }
 
+        private string GetApiUrl(RoyaleApiType type) 
+        { 
+            switch(type) 
+            {
+                case RoyaleApiType.CURRENTRIVERRACE :
+                    return _configuration.GetSection("RoyaleAPI:HttpAdressCurrentRiverRace").Value!;
+                case RoyaleApiType.CLANMEMBERINFO :
+                    return _configuration.GetSection("RoyaleAPI:HttpAdressClanInfo").Value!;
+                case RoyaleApiType.RIVERRACE:
+                    return _configuration.GetSection("RoyaleAPI:HttpAdressRiverRace").Value!;
+                default:
+                    return string.Empty;
+            }         
+        }
     }
 }

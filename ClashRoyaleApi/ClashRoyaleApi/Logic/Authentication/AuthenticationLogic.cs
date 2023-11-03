@@ -73,20 +73,16 @@ namespace ClashRoyaleApi.Logic.Authentication
             await _dataContext.SaveChangesAsync();
 
             return register;
-
         }
 
-        public async Task<List<ClanTagNameDTO>> GetAllClanTagsWithName()
+        public async Task<List<ClanTagNameDTO>> GetAllClanTagsWithNameFromDbClanMemberDb()
         {
-            List<DBUser> users = await _dataContext.DBUser.ToListAsync(); 
+            List<DbClanMembers> members = _dataContext.DbClanMembers.Where(x => x.IsInClan == true).ToList();
             List<ClanTagNameDTO> response = new List<ClanTagNameDTO>();
 
-            foreach (DBUser user in users) 
+            foreach (DbClanMembers user in members) 
             { 
-                ClanTagNameDTO dto = new ClanTagNameDTO();
-                dto.ClanTag = user.ClanTag;
-                dto.Name = user.UserName;
-                response.Add(dto);         
+                response.Add(new ClanTagNameDTO(user.ClanTag, user.Name));         
             }
             return response;
         }

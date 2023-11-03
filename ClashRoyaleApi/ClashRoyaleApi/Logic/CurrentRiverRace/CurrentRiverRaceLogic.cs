@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using ClashRoyaleApi.Logic.RoyaleApi;
 using static ClashRoyaleApi.Models.EnumClass;
 
 namespace ClashRoyaleApi.Logic.CurrentRiverRace
@@ -17,12 +18,14 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
     {
 
         private readonly IConfiguration _configuration;
-        private readonly DataContext _dataContext;    
+        private readonly DataContext _dataContext;   
+        private readonly IHttpClientWrapper _httpClientWrapper;
 
-        public CurrentRiverRaceLogic (IConfiguration configuration, DataContext context)
+        public CurrentRiverRaceLogic (IConfiguration configuration, DataContext context, IHttpClientWrapper wrapper)
         {
             _configuration = configuration;
             _dataContext = context;
+            _httpClientWrapper = wrapper;
         }
 
         public CurrentRiverRaceLogic(DataContext context)
@@ -32,7 +35,7 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
 
         public async Task<Root> GetCurrentRiverRace()
         {
-            string response = await RoyaleApiCall();
+            string response = await _httpClientWrapper.RoyaleApiCall(RoyaleApiType.CURRENTRIVERRACE);
             var log = JsonConvert.DeserializeObject<Root>(response);
             return log;
         }
@@ -85,16 +88,16 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
             return _dataContext.RiverRaceLogs.Where(x => x.SeasonId == seasonId && x.SectionId == sectionId).FirstOrDefault();
         }
 
-
         public async Task<Response> CurrentRiverRaceScheduler(SchedulerTime time)
         {
             Response res = new Response();
             try
             {
-                string response = await RoyaleApiCall();
+                string response = await _httpClientWrapper.RoyaleApiCall(RoyaleApiType.CURRENTRIVERRACE);
                 //string response = await _httpClientWrapper.RoyaleApiCall();
                 //string response = File.ReadAllText("./currenrriverrace.json");
                 var log = JsonConvert.DeserializeObject<Root>(response);
+
 
                 if (log == null) throw new ArgumentNullException("the api call did not provide any data");
 
@@ -113,13 +116,15 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                     SchedulerTime = time
                 };
 
+                RemoveInactiveMembers(log);
+           
                 if (!RiverRaceExists(seasonId, log.sectionIndex, dayOfWeek))
                 {
-                    AddRiverRaceData(log, seasonId, dayOfWeek, time);
+                    res.nrOfAttacksRemaining = AddRiverRaceData(log, seasonId, dayOfWeek, time);
                 }
                 else
                 {
-                    UpdateExistingRiverRaceData(log, seasonId, dayOfWeek, time);
+                    res.nrOfAttacksRemaining = UpdateExistingRiverRaceData(log, seasonId, dayOfWeek, time);
                 }
 
                 return res;
@@ -232,7 +237,7 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                 Type = type
             };
 
-            if(lastRecord.Type == PeriodType.COLLOSEUM)
+            if(lastRecord.Type == PeriodType.COLOSSEUM)
             {
                 //write to database, seasonID + 1
                 int newSeasonID = lastRecord.SeasonId + 1;
@@ -253,33 +258,24 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
             }
         }
 
-        private async Task<string> RoyaleApiCall()
+        private void RemoveInactiveMembers(Root log)
         {
-            string apiUrl = _configuration.GetSection("RoyaleAPI:HttpAdressCurrentRiverRace").Value!;
-            string accessToken = _configuration.GetSection("RoyaleAPI:AccessToken").Value!;
+            List<Participant> toBeRemoved = new List<Participant>();
 
-            HttpClient httpClient = new HttpClient();
-
-            httpClient.BaseAddress = new Uri(apiUrl);
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            try
+            foreach (Participant participant in log.clan.Participants)
             {
-                HttpResponseMessage response = httpClient.GetAsync(apiUrl).Result;
+                DbClanMembers member = _dataContext.DbClanMembers.Where(x => x.ClanTag == participant.Tag).FirstOrDefault();
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return await response.Content.ReadAsStringAsync();
-                }
-                else
-                {
-                    throw new Exception("Failed with status " + response.StatusCode);
-                }
+                if (member == null) continue;
+                if (!member.IsInClan) toBeRemoved.Add(participant);
             }
-            catch (Exception ex)
+
+            if (toBeRemoved.Count > 0)
             {
-                throw;
+                foreach (Participant participant in toBeRemoved)
+                {
+                    log.clan.Participants.Remove(participant);
+                }
             }
         }
     }

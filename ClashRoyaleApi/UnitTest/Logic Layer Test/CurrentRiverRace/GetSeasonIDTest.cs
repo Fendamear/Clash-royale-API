@@ -31,7 +31,7 @@ namespace UnitTest.Logic_Layer_Test.CurrentRiverRace
         {
             //arrange
             var SectionId = 1;
-            var type = PeriodType.COLLOSEUM;
+            var type = PeriodType.COLOSSEUM;
 
 
             var riverRaceLogs = new List<DbRiverRaceLog>();
@@ -51,7 +51,7 @@ namespace UnitTest.Logic_Layer_Test.CurrentRiverRace
         public void GetSeasonID_ShouldReturnSameSeasonID()
         {
             var SectionId = 1;
-            var type = PeriodType.COLLOSEUM;
+            var type = PeriodType.COLOSSEUM;
 
             TestHelperClass helper = new TestHelperClass();
 
@@ -135,7 +135,7 @@ namespace UnitTest.Logic_Layer_Test.CurrentRiverRace
             var oldSectionId = 3;
             var newSectionId = 0;
             var seasonId = 101;
-            var type = PeriodType.COLLOSEUM;
+            var type = PeriodType.COLOSSEUM;
 
             TestHelperClass helper = new TestHelperClass();
 

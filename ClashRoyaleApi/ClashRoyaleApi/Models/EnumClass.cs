@@ -19,15 +19,17 @@ namespace ClashRoyaleApi.Models
         {
             TRAINING,
             WARDAY,
-            COLLOSEUM
+            COLOSSEUM
         }
 
         public enum SchedulerTime
         {
-            SCHEDULE0800,
-            SCHEDULE1030,
-            SCHEDULE1100,
-            SCHEDULE1130,
+            MINUTESBEFORE180,
+            MINUTESBEFORE120,
+            MINUTESBEFORE60,
+            MINUTESBEFORE30,
+            MINUTESBEFORE5,
+            CLANINFOSCHEDULE
         }
 
         public enum Status
@@ -40,6 +42,13 @@ namespace ClashRoyaleApi.Models
         {
             BUILD,
             ATTACKSREMAINING
+        }
+
+        public enum RoyaleApiType
+        {
+            CURRENTRIVERRACE,
+            CLANMEMBERINFO,
+            RIVERRACE
         }
     }
 }

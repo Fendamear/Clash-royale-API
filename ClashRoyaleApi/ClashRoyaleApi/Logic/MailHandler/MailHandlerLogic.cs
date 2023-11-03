@@ -30,9 +30,12 @@ namespace ClashRoyaleApi.Logic.MailHandler
                 if (message.To.Count == 0) continue;
                 if (res.log.Status == Status.FAILED && type == MailType.ATTACKSREMAINING) continue;
 
+                if (res.log.Status == Status.FAILED) message.Priority = MailPriority.High;
+
                 message.Subject = Subject(type, res.log.SchedulerTime, res.log.Status);
                 message.Body = Body(type, res);
                 message.IsBodyHtml = true;
+                
                 myServer.Send(message);
             }        
         }
@@ -58,7 +61,14 @@ namespace ClashRoyaleApi.Logic.MailHandler
                 else
                 {
                     sb.Append("<div class=\"header failure\">\r\n    Build Failed\r\n  </div>");
-                    sb.Append($"<p id=\"rcorners2\" style=\"border: 2px solid #f44336;\"> At {res.log.TimeStamp} the current rive race data was retrieved with status: {res.log.Status.ToString()} for the scheduled event: {res.log.SchedulerTime.ToString()} <br><br>");
+                    if (res.log.SchedulerTime == SchedulerTime.CLANINFOSCHEDULE)
+                    {
+                        sb.Append($"<p id=\"rcorners2\" style=\"border: 2px solid #f44336;\"> At {res.log.TimeStamp} the clan member info data was retrieved with status: {res.log.Status.ToString()} <br><br>");
+                    }
+                    else
+                    {
+                        sb.Append($"<p id=\"rcorners2\" style=\"border: 2px solid #f44336;\"> At {res.log.TimeStamp} the current rive race data was retrieved with status: {res.log.Status.ToString()} for the scheduled event: {res.log.SchedulerTime.ToString()} <br><br>");
+                    }
                     sb.Append($"The code Exited with the following Exception:\r\n\r\n    <table id=\"customers\">\r\n        <tr>\r\n            <th>Name</th>\r\n            <th>Exception Type</th>\r\n        </tr>\r\n        <tr>\r\n            <td>Exception Type</td>\r\n            <td>{res.Exception.GetType().ToString()}</td>\r\n        </tr>\r\n        <tr>\r\n            <td>Exception Message</td>\r\n            <td>{res.Exception.Message}</td>\r\n        </tr>\r\n        <tr>\r\n            <td>Exception StackTrace</td>\r\n            <td>{res.Exception.StackTrace}</td>\r\n        </tr>\r\n\r\n    </table>\r\n</p>");
                 }
                 sb.Append("</body> \r\n </html>");
@@ -99,16 +109,16 @@ namespace ClashRoyaleApi.Logic.MailHandler
 
             switch(time) 
             {
-                case SchedulerTime.SCHEDULE0800:
+                case SchedulerTime.MINUTESBEFORE120:
                     sb.Append("At 08:00");
                     break;
-                case SchedulerTime.SCHEDULE1030:
+                case SchedulerTime.MINUTESBEFORE60:
                     sb.Append("At 10:30");
                     break;
-                case SchedulerTime.SCHEDULE1100:
+                case SchedulerTime.MINUTESBEFORE30:
                     sb.Append("At 11:00");
                     break;
-                case SchedulerTime.SCHEDULE1130:
+                case SchedulerTime.MINUTESBEFORE5:
                     sb.Append("At 11:30");
                     break;
                 default:

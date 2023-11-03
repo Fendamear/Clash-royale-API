@@ -44,7 +44,7 @@ namespace UnitTest.Logic_Layer_Test.CurrentRiverRace
             List<NrOfAttacksRemaining> nrOfAttacksRemainings = new List<NrOfAttacksRemaining>();
             CurrentRiverRaceLogic logic = new CurrentRiverRaceLogic(mockContext.Object);
 
-            nrOfAttacksRemainings = logic.UpdateExistingRiverRaceData(new Root() { sectionIndex = 2 }, 100, 0, SchedulerTime.SCHEDULE1130);
+            nrOfAttacksRemainings = logic.UpdateExistingRiverRaceData(new Root() { sectionIndex = 2 }, 100, 0, SchedulerTime.MINUTESBEFORE5);
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace UnitTest.Logic_Layer_Test.CurrentRiverRace
         {
             //arrange
 
-            SchedulerTime time = SchedulerTime.SCHEDULE0800;
+            SchedulerTime time = SchedulerTime.MINUTESBEFORE120;
 
             TestHelperClass helper = new TestHelperClass();
             var currentRiverRace = new List<DbCurrentRiverRace>();
@@ -79,7 +79,7 @@ namespace UnitTest.Logic_Layer_Test.CurrentRiverRace
         {
             //arrange
 
-            SchedulerTime time = SchedulerTime.SCHEDULE1130;
+            SchedulerTime time = SchedulerTime.MINUTESBEFORE5;
 
             TestHelperClass helper = new TestHelperClass();
             var currentRiverRace = new List<DbCurrentRiverRace>();

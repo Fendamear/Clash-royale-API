@@ -26,7 +26,7 @@ namespace UnitTest.Logic_Layer_Test.TestHelper
         
         public DbCurrentRiverRace GetCurrentRiverRace()
         {
-            return new DbCurrentRiverRace(Guid.NewGuid(), 100, 0,0, "100.0.0", "Tag", "Name", 900, 4, 0, SchedulerTime.SCHEDULE1100);
+            return new DbCurrentRiverRace(Guid.NewGuid(), 100, 0,0, "100.0.0", "Tag", "Name", 900, 4, 0, SchedulerTime.MINUTESBEFORE30);
         }
 
         public List<DbCurrentRiverRace> GetCurrentRiverRaceList()
