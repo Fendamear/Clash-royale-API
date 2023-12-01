@@ -5,6 +5,7 @@ import {  Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import Sidebar from './Components/Layout/Sidebar';
 import HomePage from './Components/Layout/Homepage';
 import RegisterWithClanTag from './Components/Register/RegisterWithClanTag';
+import CallList from './Components/CallList/CallList'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path='/' element={<HomePage />} />
       <Route path='/MailSubscription' element={<MailSubScription />} />
       <Route path='/Register' element={<RegisterWithClanTag />} />
+      <Route path='/Calllist' element={<CallList />} />
       {/* <Route path='/calendar' element={<Race />} />
       <Route path='/Account/:id' element={<Account />} />
       <Route path='/home/predictions' element={<Account />} />

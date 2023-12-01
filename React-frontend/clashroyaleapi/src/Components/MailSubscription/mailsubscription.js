@@ -70,7 +70,7 @@ const MailSettingsMatrix = () => {
     return (
         <>
             <br></br>
-            <div class="wrapper bg-white mt-sm-5">
+            <div class="wrapperMailSubscription">
                 <div className='loginform-container'>
                     <h2>Change your Mail Subscription Preferences</h2>
                     <br></br>

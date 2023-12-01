@@ -35,7 +35,6 @@ namespace ClashRoyaleApi.Logic.ClanMembers
 
         public async Task<List<DbClanMembers>> RetrieveClanInfoScheduler()
         {
-            throw new ArgumentException("this is a test exception");
             string response = await _httpClient.RoyaleApiCall(EnumClass.RoyaleApiType.CLANMEMBERINFO);
             var list = JsonConvert.DeserializeObject<Root>(response);
 

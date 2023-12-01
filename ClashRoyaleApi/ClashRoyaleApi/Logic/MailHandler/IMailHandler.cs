@@ -1,4 +1,5 @@
 ﻿using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
+using ClashRoyaleApi.Models.DbModels;
 using System.Net.Mail;
 using static ClashRoyaleApi.Models.EnumClass;
 
@@ -10,6 +11,6 @@ namespace ClashRoyaleApi.Logic.MailHandler
 
         SmtpClient GetSmtpClient();
 
-        MailMessage GetMailAddresses(MailType type, SchedulerTime time);
+        List<DBUser> GetMailAddresses(MailType type, SchedulerTime time);
     }
 }

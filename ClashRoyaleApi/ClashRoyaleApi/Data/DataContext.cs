@@ -48,6 +48,9 @@ namespace ClashRoyaleApi.Data
 
         public DbSet<MailSubscriptions> MailSubscriptions { get; set; }
 
+        //Call List
+
+        public DbSet<DbCallList> CallList { get; set; }
 
         //data entries for logging
 

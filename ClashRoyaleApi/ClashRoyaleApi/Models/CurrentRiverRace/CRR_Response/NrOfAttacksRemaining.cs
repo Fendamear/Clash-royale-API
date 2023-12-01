@@ -15,6 +15,7 @@
             DecksRemaining = decksremaining;
         }
 
+        public NrOfAttacksRemaining() { }
 
     }
 }

@@ -15,7 +15,7 @@ using System.Text.Json.Serialization;
 using ClashRoyaleApi.Logic.RoyaleApi;
 using ClashRoyaleApi.Logic.MailHandler;
 using ClashRoyaleApi.Logic.MailHandler.MailSubscription;
-
+using ClashRoyaleApi.Logic.CallList;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +58,7 @@ builder.Services.AddScoped<IHttpClientWrapper, HttpClientWrapper>();
 builder.Services.AddScoped<HttpClient, HttpClient>();
 builder.Services.AddScoped<IMailHandler, MailHandlerLogic>();
 builder.Services.AddScoped<IMailSubscription, MailSubscriptionLogic>();
+builder.Services.AddScoped<ICallList, CallListLogic>();
 //builder.Services.AddHttpClient<HttpClient>();
 
 

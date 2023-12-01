@@ -118,7 +118,7 @@ const RegisterWithClanTag = () => {
         return (
             <>
                 <br></br>
-                <div class="wrapper bg-white mt-sm-5">
+                <div class="wrapperRegister">
                     <div className='loginform-container'>
                         <h2>Please select your Clash Royale user name</h2>
                         <br></br>
@@ -129,6 +129,7 @@ const RegisterWithClanTag = () => {
                             placeholder={loading ? 'Loading...' : 'Select an option'}
                             isDisabled={loading}
                             isSearchable={true}
+                            styles={{ textAlign: 'center', display: "flex", justifyContent: "center"}}
                         />
                         <br></br>
 
@@ -145,7 +146,7 @@ const RegisterWithClanTag = () => {
         return (
             <>
                 <br></br>
-                <div class="wrapper bg-white mt-sm-5">
+                <div class="wrapperRegister">
                     <div className='loginform-container'></div>
                     <h2>Register</h2>
                     <form onSubmit={handleSubmit}>

@@ -1,3 +1,13 @@
+.wrapper {
+    padding: 30px 50px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    margin: 10px auto;
+    max-width: 1500px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 
 .login100-form-btn {
     font-family: Calibri;
@@ -83,7 +93,7 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px var(--purple-standard);
-    width: 800px;
+    width: 400px;
     margin: auto;
     color: #fff;
     font-weight: bold;
@@ -94,7 +104,7 @@
 }
 
 .loginform-container{
-    text-align: center;
+    text-align: right;
 }
 
 .loginform-header{
