@@ -1,4 +1,5 @@
-﻿using ClashRoyaleApi.DTOs.River_Race_Season_Log;
+﻿using ClashRoyaleApi.DTOs.Current_River_Race;
+using ClashRoyaleApi.DTOs.River_Race_Season_Log;
 using ClashRoyaleApi.Models.CurrentRiverRace;
 using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
 using ClashRoyaleApi.Models.DbModels;
@@ -9,6 +10,8 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
     public interface ICurrentRiverRace
     {
         Task<Root> GetCurrentRiverRace();
+
+        List<CurrentRiverRaceSeasonDTO> GetCurrentRiverRace(int seasonId, int sectionId, int dayId);
 
         Task<Response> CurrentRiverRaceScheduler(SchedulerTime time);
 

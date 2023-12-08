@@ -24,33 +24,39 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
-        title: "My account",
+        title: "Current river race data",
         icon: <VscAccount color='white' />,
-        link: "/Account/" + localStorage.getItem("UserID"),
+        link: "/currentriverrace",
         cName: 'nav-text'
     },
     {
-        title: "F1 Calendar",
+        title: "Mail Preferences",
         icon: <GoIcons.GoCalendar />,
-        link: "/Calendar",
+        link: "/MailSubscription",
         cName: 'nav-text'
     },
     {
-        title: "Standings",
+        title: "Call List",
         icon: <MdLeaderboard />,
-        link: "Standings",
+        link: "/CallList",
         cName: 'nav-text'
     },
     {
-        title: "Season predictions",
+        title: "Clan Members",
         icon: <GoIcons.GoCalendar />,
-        link: "/prediction/season",
+        link: "/ClanMembers",
         cName: 'nav-text'
     },
     {
-        title: "WebSocket",
+        title: "Clan Member Log",
         icon: <GoIcons.GoCalendar />,
-        link: "/websocket",
+        link: "/clanMemberLog",
+        cName: 'nav-text'
+    },
+    {
+        title: "River Race Log",
+        icon: <GoIcons.GoCalendar />,
+        link: "/clanMemberLog",
         cName: 'nav-text'
     },
 ]

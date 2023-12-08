@@ -49,6 +49,7 @@ namespace ClashRoyaleApi.Logic.ClanMembers
 
             foreach (var member in list.Items)
             { 
+                
                 DbClanMembers dbClanMember;
                 //first flow check if there are any new unregisterd members
                 if (!allMembers.Any(t => t.ClanTag == member.Tag))
@@ -62,6 +63,7 @@ namespace ClashRoyaleApi.Logic.ClanMembers
                 }            
 
                 DateTime LastSeen = DateTime.ParseExact(member.LastSeen, format, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AssumeUniversal);
+                dbClanMember.LastUpdated = DateTime.Now;
 
                 if (LastSeen < Inactive)
                 {
@@ -111,7 +113,6 @@ namespace ClashRoyaleApi.Logic.ClanMembers
 
             foreach (var member in DbMembers)
             {
-
                 response.Add(new GetClanMemberInfoDTO()
                 {
                     Tag = member.ClanTag,
@@ -122,7 +123,7 @@ namespace ClashRoyaleApi.Logic.ClanMembers
                     IsInClan = member.IsInClan,
                 });
             }
-            return response;
+            return response.OrderByDescending(x => x.IsInClan).ToList();
         }
 
         public async Task<List<GetClanMemberLogDTO>> GetClanMemberLog()
@@ -171,7 +172,8 @@ namespace ClashRoyaleApi.Logic.ClanMembers
                 Role = member.Role,
                 LastSeen = DateTime.ParseExact(member.LastSeen, format, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AssumeUniversal),
                 IsActive = true,
-                IsInClan = true
+                IsInClan = true,
+                LastUpdated = DateTime.Now           
             };
 
             _dataContext.DbClanMembers.Add(newMember);
@@ -184,6 +186,7 @@ namespace ClashRoyaleApi.Logic.ClanMembers
             member.LastSeen = DateTime.Now;
             member.IsActive = false;
             member.IsInClan = false;
+            member.LastUpdated = DateTime.Now;
 
             _dataContext.DbClanMembers.Update(member);
             AddLog(member.ClanTag, member.Name, EnumClass.MemberStatus.Removed, string.Empty, "Removed");
@@ -204,6 +207,11 @@ namespace ClashRoyaleApi.Logic.ClanMembers
             };
             _dataContext.RiverClanMemberLog.Add(log);
             _dataContext.SaveChanges();
+        }
+
+        public GetLatestLogTimeDTO GetLatestLogTime()
+        {
+           return new GetLatestLogTimeDTO(_dataContext.DbClanMembers.FirstOrDefault().LastUpdated);
         }
     }
 }

@@ -18,15 +18,21 @@ namespace ClashRoyaleApi.Controllers
             return View();
         }
 
-
-
-        [HttpGet("/ClanMembers")]
-        public async Task test()
+        [HttpGet("ClanMembers/GetClanMembersFromRemote")]
+        public async Task<ActionResult> GetClanMembersFromRemote()
         {
-            await _ClanMemberLogic.RetrieveClanInfoScheduler();
+            try
+            {
+                await _ClanMemberLogic.RetrieveClanInfoScheduler();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpGet("/GetClanMembers")]
+        [HttpGet("ClanMembers/GetClanMembers")]
         public async Task<ActionResult<List<GetClanMemberInfoDTO>>> GetClanMemberInfo()
         {
             try
@@ -39,7 +45,7 @@ namespace ClashRoyaleApi.Controllers
             }
         }
 
-        [HttpGet("/GetClanMemberLog")]
+        [HttpGet("ClanMembers/GetClanMemberLog")]
         public async Task<ActionResult<List<GetClanMemberLogDTO>>> GetClanMemberLog()
         {
             try
@@ -52,7 +58,7 @@ namespace ClashRoyaleApi.Controllers
             }
         }
 
-        [HttpDelete("/DeleteClanMemberLog")]
+        [HttpDelete("ClanMembers/DeleteClanMemberLog")]
         public async Task<ActionResult<List<GetClanMemberLogDTO>>> DeleteClanMemberLog(Guid guid)
         {
             try
@@ -65,6 +71,21 @@ namespace ClashRoyaleApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("/ClanMembers/GetLatestLogTime")]
+        public ActionResult<GetLatestLogTimeDTO> GetLatestLogTime()
+        {
+            try
+            {
+                return Ok(_ClanMemberLogic.GetLatestLogTime());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+            
+
 
     }
 }

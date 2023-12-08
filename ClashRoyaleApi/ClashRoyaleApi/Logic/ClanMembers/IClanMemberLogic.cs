@@ -13,6 +13,8 @@ namespace ClashRoyaleApi.Logic.ClanMembers
         Task<List<GetClanMemberLogDTO>> GetClanMemberLog();
 
         Task<List<GetClanMemberInfoDTO>> GetClanMemberInfo();
+
+        GetLatestLogTimeDTO GetLatestLogTime();
                
     }
 }

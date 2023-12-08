@@ -11,6 +11,8 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using ClashRoyaleApi.Logic.RoyaleApi;
 using static ClashRoyaleApi.Models.EnumClass;
+using ClashRoyaleApi.DTOs.Current_River_Race;
+using ClashRoyaleApi.Models;
 
 namespace ClashRoyaleApi.Logic.CurrentRiverRace
 {
@@ -33,12 +35,99 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
             _dataContext = context;
         }
 
+        //retrieving current river race logic
+
         public async Task<Root> GetCurrentRiverRace()
         {
             string response = await _httpClientWrapper.RoyaleApiCall(RoyaleApiType.CURRENTRIVERRACE);
             var log = JsonConvert.DeserializeObject<Root>(response);
             return log;
         }
+
+        public List<CurrentRiverRaceSeasonDTO> GetCurrentRiverRace(int seasonId, int secId, int dayId)
+        {
+            List<DbCurrentRiverRace> riverRace = _dataContext.CurrentRiverRace.Where(x => x.SeasonId == seasonId).ToList();
+            List<CurrentRiverRaceSeasonDTO> response = new List<CurrentRiverRaceSeasonDTO>();
+            List<DbRiverRaceLog> log = _dataContext.RiverRaceLogs.Where(x => x.SeasonId == seasonId).ToList();
+
+            foreach (string tag in riverRace.Select(x => x.Tag).Distinct())
+            {
+                List<DbCurrentRiverRace> member = riverRace.Where(x => x.Tag == tag).ToList();
+                CurrentRiverRaceSeasonDTO dto = new CurrentRiverRaceSeasonDTO();
+                string name = member.FirstOrDefault().Name;
+
+                dto.DateIdentifier = $"Season {seasonId}";
+                dto.Time = member.Where(x => x.SectionId == 0 && x.DayId == 0).FirstOrDefault().TimeStamp;
+                dto.Name = name;
+                int fame = 0;
+                dto.DecksUsed = member.Sum(x => x.DecksUsedToday);
+                dto.DecksNotUsed = member.Sum(x => x.DecksNotUsed);
+
+                List<CurrentRiverRaceSectionDTO> sections = new List<CurrentRiverRaceSectionDTO>();
+                //ember.Select(x => x.SectionId).Distinct();
+
+                foreach (int sectionId in secId < 0
+                ? member.Select(x => x.SectionId).Distinct()
+                : new[] { member.FirstOrDefault(x => x.SectionId == secId)?.SectionId ?? secId })
+                {
+                    CurrentRiverRaceSectionDTO section = new CurrentRiverRaceSectionDTO();
+
+                    List<DbCurrentRiverRace> week = member.Where(x => x.SectionId == sectionId).ToList();
+                    List<CurrentRiverRaceDayDTO> days = new List<CurrentRiverRaceDayDTO>();
+
+                    if (week.Count == 0) continue;
+
+                    section.Fame = fame;
+                    section.Time = week.Where(x => x.SectionId == sectionId && x.DayId == 0).FirstOrDefault().TimeStamp;
+                    section.DateIdentifier = $"Week {sectionId + 1}";
+                    section.DecksNotUsed = member.Where(x => x.SectionId == sectionId).Sum(x => x.DecksNotUsed);
+                    section.DecksUsed = member.Where(x => x.SectionId == sectionId).Sum(x => x.DecksUsedToday);
+
+                    int dayFame = 0;
+
+                    fame += week.Max(x => x.Fame);
+                  
+                    foreach (DbCurrentRiverRace entry in dayId < 0 ? week : week.Where(x => x.DayId == dayId).ToList()) 
+                    {               
+                        CurrentRiverRaceDayDTO day = new CurrentRiverRaceDayDTO();
+
+                        day.DecksUsed = entry.DecksUsedToday;
+                        day.DecksNotUsed = entry.DecksNotUsed;
+                        day.DateIdentifier = GetDay(entry.DayId);
+                        day.Time = entry.TimeStamp;
+                        day.Fame = entry.Fame - dayFame;
+
+                        dayFame = entry.Fame;
+                        days.Add(day);  
+                    } 
+                    section.subRows = days;
+                    sections.Add(section);
+                }
+                dto.Fame = fame;
+                dto.subRows = sections;
+                response.Add(dto);
+            }
+            return response;
+        }
+
+        private string GetDay(int dayId)
+        {
+            switch(dayId) 
+            { 
+                case 0:
+                    return "Thursday";
+                case 1:
+                    return "Friday";
+                case 2:
+                    return "Saturday";
+                case 3:
+                    return "Sunday";
+                default:
+                    throw new Exception("illegal day provided");                   
+            }
+        }
+
+        //river race logs
 
         public async Task<List<GetRiverRaceSeasonLogDTO>> GetRiverRaceSeasonLog()
         {
@@ -87,6 +176,8 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
         {
             return _dataContext.RiverRaceLogs.Where(x => x.SeasonId == seasonId && x.SectionId == sectionId).FirstOrDefault();
         }
+
+        //current river race logic
 
         public async Task<Response> CurrentRiverRaceScheduler(SchedulerTime time)
         {
@@ -161,7 +252,8 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                     Fame = item.Fame,
                     DecksUsedToday = item.DecksUsedToday,
                     DecksNotUsed = decksNotUsed,
-                    Schedule = time
+                    Schedule = time,
+                    TimeStamp = DateTime.Now               
                 };
                 _dataContext.CurrentRiverRace.Add(race);
                 attacksRemainings.Add(new NrOfAttacksRemaining(item.Tag, item.Name, decksNotUsed));
@@ -194,6 +286,7 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                 race.DecksNotUsed = decksNotUsed;
                 race.DecksUsedToday = item.DecksUsedToday;
                 race.Schedule = time;
+                race.TimeStamp = DateTime.Now;
                 _dataContext.CurrentRiverRace.Update(race);
                 attacksRemainings.Add(new NrOfAttacksRemaining(item.Tag, item.Name, decksNotUsed));
             }

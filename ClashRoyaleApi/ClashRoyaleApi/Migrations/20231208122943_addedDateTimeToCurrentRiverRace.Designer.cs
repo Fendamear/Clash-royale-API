@@ -3,6 +3,7 @@ using System;
 using ClashRoyaleApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClashRoyaleApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231208122943_addedDateTimeToCurrentRiverRace")]
+    partial class addedDateTimeToCurrentRiverRace
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,9 +164,6 @@ namespace ClashRoyaleApi.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime>("LastSeen")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("LastUpdated")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")

@@ -13,7 +13,7 @@ namespace ClashRoyaleApi.Controllers
             _currentRiverRace = currentRiverRace;
         }
 
-        [HttpGet("/currentriverrace")]
+        [HttpGet("CurrentRiverRace/currentriverrace")]
         public ActionResult GetCurrentRiverRace(SchedulerTime time)
         {
             try
@@ -28,7 +28,22 @@ namespace ClashRoyaleApi.Controllers
             }
         }
 
-        [HttpGet("/GetRiverRaceLog")]
+        [HttpGet("CurrentRiverRace/GetCurrentriverrace")]
+        public ActionResult GetCurrentRiverRace(int seasonId, int sectionId, int dayId)
+        {
+            try
+            {
+                //return Ok(_currentRiverRace.GetCurrentRiverRace());
+                return Ok(_currentRiverRace.GetCurrentRiverRace(seasonId, sectionId, dayId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);  
+            }
+        }
+
+
+        [HttpGet("CurrentRiverRace/GetRiverRaceLog")]
         public async Task<ActionResult<List<GetRiverRaceSeasonLogDTO>>> GetRiverRaceSeasonLog()
         {
             try
@@ -41,7 +56,7 @@ namespace ClashRoyaleApi.Controllers
             }
         }
 
-        [HttpPost("/PostRiverRaceLog")]
+        [HttpPost("CurrentRiverRace/PostRiverRaceLog")]
         public async Task<ActionResult> PostRiverRaceSeasonLog(PostRiverRaceLogDTO log)
         {
             try
@@ -55,7 +70,7 @@ namespace ClashRoyaleApi.Controllers
             }
         }
 
-        [HttpDelete("/DeleteRiverRaceLog")]
+        [HttpDelete("CurrentRiverRace/DeleteRiverRaceLog")]
         public async Task<ActionResult> DeleteRiverRaceSeasonLog(int seasonId, int sectionId)
         {
             try

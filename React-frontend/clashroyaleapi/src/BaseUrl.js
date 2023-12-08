@@ -1,3 +1,6 @@
-export const MailPreferenceUrl = "https://localhost:44391/Mail/";
-export const AuthenticationUrl = "https://localhost:44391/Authentication/"
-export const CallListUrl = "https://localhost:44391/CallList"
+export const BaseUrl = "https://localhost:44391/"
+export const MailPreferenceUrl = BaseUrl + "/Mail/";
+export const AuthenticationUrl = BaseUrl + "Authentication/"
+export const CallListUrl = BaseUrl + "CallList"
+export const ClanMemberUrl = BaseUrl + "ClanMembers/"
+export const CurrentRiverRaceUrl = BaseUrl + "CurrentRiverRace/"

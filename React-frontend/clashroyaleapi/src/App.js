@@ -6,6 +6,9 @@ import Sidebar from './Components/Layout/Sidebar';
 import HomePage from './Components/Layout/Homepage';
 import RegisterWithClanTag from './Components/Register/RegisterWithClanTag';
 import CallList from './Components/CallList/CallList'
+import CollapsibleTable from './Components/currentRiverRace/currentriverrace';
+import ClanMembers from './Components/ClanMembers/clanMembers';
+import ClanMemberLog from './Components/ClanMemberLog/ClanMemberLog';
 
 function App() {
   return (
@@ -16,6 +19,9 @@ function App() {
       <Route path='/MailSubscription' element={<MailSubScription />} />
       <Route path='/Register' element={<RegisterWithClanTag />} />
       <Route path='/Calllist' element={<CallList />} />
+      <Route path='/CurrentRiverRace' element={<CollapsibleTable />} />
+      <Route path='/ClanMembers' element={<ClanMembers />} />
+      <Route path='/ClanMemberLog' element={<ClanMemberLog />} />
       {/* <Route path='/calendar' element={<Race />} />
       <Route path='/Account/:id' element={<Account />} />
       <Route path='/home/predictions' element={<Account />} />

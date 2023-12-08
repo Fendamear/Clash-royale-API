@@ -25,6 +25,8 @@ namespace ClashRoyaleApi.Models.DbModels
 
         public bool IsInClan { get; set; }
 
+        public DateTime LastUpdated { get; set; }
+
         public DbClanMembers() { }
 
         public DbClanMembers(string clanTag, string name, string role, DateTime lastSeen, bool isActive, bool isInClan)

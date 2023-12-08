@@ -8,6 +8,8 @@ namespace ClashRoyaleApi.Models.DbModels
         [Key]
         public Guid Guid { get; set; }
 
+        public DateTime TimeStamp { get; set; }
+
         public int SeasonId { get; set; }
 
         public int SectionId { get; set; }  
