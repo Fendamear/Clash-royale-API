@@ -75,7 +75,8 @@ namespace ClashRoyaleApi.Controllers
         {
             try
             {
-                if (!await _currentRiverRace.DeleteRiverRaceLog(seasonId, sectionId)) return BadRequest("River Race Log does not exist");
+                if (!await _currentRiverRace.DeleteRiverRaceLog(seasonId, sectionId))
+                    return BadRequest("River Race Log does not exist");
                 return Ok("River Race log succesfully deleted");
             }
             catch (Exception ex)
@@ -84,27 +85,23 @@ namespace ClashRoyaleApi.Controllers
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public IActionResult Index()
+        [HttpGet("/test")]
+        public ActionResult TestMethod(string datetime)
         {
-            return View();
+            try
+            {
+                DateTime response;
+                if (!DateTime.TryParse(datetime, out response))
+                {
+                    throw new InvalidDataException("Date String is invalid");
+                }
+                DateTime utcTime5MinutesBefore = TimeZoneInfo.ConvertTimeToUtc(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 58, 0));
+                return Ok(utcTime5MinutesBefore);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

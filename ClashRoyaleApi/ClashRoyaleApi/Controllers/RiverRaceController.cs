@@ -16,11 +16,6 @@ namespace ClashRoyaleApi.Controllers
             _mailHandler = mailHandler;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet("/RiverRace")] 
         public async Task<ActionResult<Root>> getRiverRace(int limit)
         {

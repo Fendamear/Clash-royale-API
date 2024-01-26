@@ -14,6 +14,12 @@ namespace ClashRoyaleApi.Migrations
             migrationBuilder.AlterDatabase()
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.DropTable(
+                name: "RiverRaceClan");
+
+            migrationBuilder.DropTable(
+                name: "RiverRaceParticipant");
+
             migrationBuilder.CreateTable(
                 name: "DbClanMembers",
                 columns: table => new

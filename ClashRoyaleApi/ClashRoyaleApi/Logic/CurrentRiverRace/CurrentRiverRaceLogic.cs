@@ -57,7 +57,7 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                 string name = member.FirstOrDefault().Name;
 
                 dto.DateIdentifier = $"Season {seasonId}";
-                dto.Time = member.Where(x => x.SectionId == 0 && x.DayId == 0).FirstOrDefault().TimeStamp;
+                //dto.Time = member.Where(x => x.SectionId == 0 && x.DayId == 0).FirstOrDefault().TimeStamp;
                 dto.Name = name;
                 int fame = 0;
                 dto.DecksUsed = member.Sum(x => x.DecksUsedToday);
@@ -78,7 +78,7 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                     if (week.Count == 0) continue;
 
                     section.Fame = fame;
-                    section.Time = week.Where(x => x.SectionId == sectionId && x.DayId == 0).FirstOrDefault().TimeStamp;
+                    section.Time = week.FirstOrDefault().TimeStamp;
                     section.DateIdentifier = $"Week {sectionId + 1}";
                     section.DecksNotUsed = member.Where(x => x.SectionId == sectionId).Sum(x => x.DecksNotUsed);
                     section.DecksUsed = member.Where(x => x.SectionId == sectionId).Sum(x => x.DecksUsedToday);
@@ -197,8 +197,6 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                 int dayOfWeek = GetDayOfWeek();
                 int seasonId = GetSeasonId(log.sectionIndex, type);
 
-                var mergedString = $"{seasonId}.{log.sectionIndex}.{dayOfWeek}";
-
                 res.log = new CurrentRiverRaceLog()
                 {
                     DayId = dayOfWeek,
@@ -217,7 +215,8 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                 {
                     res.nrOfAttacksRemaining = UpdateExistingRiverRaceData(log, seasonId, dayOfWeek, time);
                 }
-
+                res.log.TimeStamp = DateTime.Now;
+                res.log.Status = Status.SUCCES;
                 return res;
             }
             catch (Exception ex)
@@ -340,15 +339,13 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
                 _dataContext.SaveChanges();
                 return newSeasonID;
             }
-            else
-            {
-                //write to database with current section ID
-                log.SeasonId = lastRecord.SeasonId;
 
-                _dataContext.Add(log);
-                _dataContext.SaveChanges();
-                return lastRecord.SeasonId;
-            }
+            //write to database with current section ID
+            log.SeasonId = lastRecord.SeasonId;
+
+            _dataContext.Add(log);
+            _dataContext.SaveChanges();
+            return lastRecord.SeasonId;
         }
 
         private void RemoveInactiveMembers(Root log)

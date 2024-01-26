@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using ClashRoyaleApi.Logic.ClanMembers;
 using ClashRoyaleApi.Data;
 using ClashRoyaleApi.Logic.RiverRace;
@@ -34,14 +35,36 @@ builder.Services.AddCors(options =>
                       });
 });
 
+DateTime Timestamp;
+
+if (builder.Environment.IsDevelopment())
+{
+    Timestamp = DateTime.Now;
+}
+else
+{
+    string myVariable = Environment.GetEnvironmentVariable("TimeStamp");
+    if (!DateTime.TryParse(myVariable, out Timestamp))
+    {
+        throw new InvalidDataException();
+    }
+}
+
+Debug.WriteLine(Timestamp.ToString());
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-   options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(5, 7, 31)), b => b.MigrationsAssembly("ClashRoyaleApi"));
-  
+    if (builder.Environment.IsDevelopment())
+    {
+        options.UseMySql(builder.Configuration.GetConnectionString("LocalConnection"), new MySqlServerVersion(new Version(5, 7, 31)), b => b.MigrationsAssembly("ClashRoyaleApi"));
+    }
+    else
+    {
+        options.UseMySql(builder.Configuration.GetConnectionString("DockerConnection"), new MySqlServerVersion(new Version(5, 7, 31)), b => b.MigrationsAssembly("ClashRoyaleApi"));
+    }
 });
 
 builder.Services.AddSwaggerGen();
@@ -59,9 +82,6 @@ builder.Services.AddScoped<HttpClient, HttpClient>();
 builder.Services.AddScoped<IMailHandler, MailHandlerLogic>();
 builder.Services.AddScoped<IMailSubscription, MailSubscriptionLogic>();
 builder.Services.AddScoped<ICallList, CallListLogic>();
-//builder.Services.AddHttpClient<HttpClient>();
-
-
 
 builder.Services.AddQuartz(q =>
 {
@@ -69,57 +89,72 @@ builder.Services.AddQuartz(q =>
     var jobKeyCI = new JobKey("ClanMemberInfo");
 
     TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
-    DateTime utcTime5MinutesBefore = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 30, 0), localTimeZone);
-    DateTime utcTime30MinutesBefore = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0), localTimeZone);
-    DateTime utcTime1HourBefore = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 30, 0), localTimeZone);
-    DateTime utcTime2HoursBefore = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 30, 0), localTimeZone);
-    DateTime utcTime3HoursBefore = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 30, 0), localTimeZone);
+    DateTime utcTime5MinutesBefore = Timestamp.AddMinutes(-5);
+    DateTime utcTime30MinutesBefore = Timestamp.AddMinutes(-30);
+    DateTime utcTime1HourBefore = Timestamp.AddMinutes(-60);
+    DateTime utcTime2HoursBefore = Timestamp.AddMinutes(-120);
+    DateTime utcTime3HoursBefore = Timestamp.AddMinutes(-180);
 
     q.AddJob<RiverRaceScheduler>(opts => opts.WithIdentity(jobKeyCRR));
     q.AddJob<ClanMemberInfoScheduler>(opts => opts.WithIdentity(jobKeyCI));
 
     q.AddTrigger(opts => opts.ForJob(jobKeyCI)
-    .WithIdentity("ClanMemberInfo-1030")
-    .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(18, utcTime5MinutesBefore.Minute,
-        new[] { DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday }).InTimeZone(localTimeZone)));
+    .WithIdentity("ClanMemberInfo-1100")
+    .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(11, 0).InTimeZone(localTimeZone)));
+
+    q.AddTrigger(opts => opts.ForJob(jobKeyCI)
+        .WithIdentity("ClanMemberInfo-2300")
+        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(23, 0).InTimeZone(localTimeZone)));
 
     //scheduler for current river race
 
-    q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE5)
-    .WithIdentity("riverRaceSchedelar-0930")
-    .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(utcTime5MinutesBefore.Hour, utcTime5MinutesBefore.Minute)
-    .InTimeZone(localTimeZone)));
-
+    //5 minutes before
     q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE30)
-        .WithIdentity("riverRaceSchedelar-0900")
-        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(utcTime30MinutesBefore.Hour, utcTime30MinutesBefore.Minute)
-        .InTimeZone(localTimeZone)));
+        .WithIdentity("riverRaceScheduler-5Minutes")
+        .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(utcTime5MinutesBefore.Hour, utcTime5MinutesBefore.Minute,
+                new[] { DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday })
+            .InTimeZone(localTimeZone)));
 
+    //30 minutes before
+    q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE5)
+        .WithIdentity("riverRaceScheduler-30Minutes")
+        .WithSchedule(
+            CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(utcTime30MinutesBefore.Hour, utcTime30MinutesBefore.Minute,
+                new[] { DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday }).InTimeZone(localTimeZone)));
+
+    //1 hour before
     q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE60)
-        .WithIdentity("riverRaceSchedelar-0830")
-        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(utcTime1HourBefore.Hour, utcTime1HourBefore.Minute)
+        .WithIdentity("riverRaceScheduler-1Hour")
+        .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(utcTime1HourBefore.Hour, utcTime1HourBefore.Minute,
+                new[] { DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday })
         .InTimeZone(localTimeZone)));
 
+    //2 hours before
     q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE120)
-        .WithIdentity("riverRaceSchedelar-0730")
-        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(utcTime2HoursBefore.Hour, utcTime2HoursBefore.Minute)
+        .WithIdentity("riverRaceScheduler-2Hour")
+        .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(utcTime2HoursBefore.Hour, utcTime2HoursBefore.Minute,
+                new[] { DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday })
         .InTimeZone(localTimeZone)));
 
+    //3 hours before
     q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE180)
-        .WithIdentity("riverRaceSchedelar-0630")
-        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(utcTime3HoursBefore.Hour, utcTime3HoursBefore.Minute)
+        .WithIdentity("riverRaceScheduler-3Hour")
+        .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(utcTime3HoursBefore.Hour, utcTime3HoursBefore.Minute,
+                new[] { DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday })
         .InTimeZone(localTimeZone)));
 });
 builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<DataContext>();
+    context.Database.Migrate();
 }
+// Configure the HTTP request pipeline.
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
