@@ -1,5 +1,6 @@
 ﻿using ClashRoyaleApi.DTOs.River_Race_Season_Log;
 using ClashRoyaleApi.Logic.CurrentRiverRace;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static ClashRoyaleApi.Models.EnumClass;
 
@@ -57,6 +58,7 @@ namespace ClashRoyaleApi.Controllers
         }
 
         [HttpPost("CurrentRiverRace/PostRiverRaceLog")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> PostRiverRaceSeasonLog(PostRiverRaceLogDTO log)
         {
             try
@@ -71,11 +73,12 @@ namespace ClashRoyaleApi.Controllers
         }
 
         [HttpDelete("CurrentRiverRace/DeleteRiverRaceLog")]
-        public async Task<ActionResult> DeleteRiverRaceSeasonLog(int seasonId, int sectionId)
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> DeleteRiverRaceSeasonLog(string id)
         {
             try
             {
-                if (!await _currentRiverRace.DeleteRiverRaceLog(seasonId, sectionId))
+                if (!await _currentRiverRace.DeleteRiverRaceLog(id))
                     return BadRequest("River Race Log does not exist");
                 return Ok("River Race log succesfully deleted");
             }
@@ -85,23 +88,6 @@ namespace ClashRoyaleApi.Controllers
             }
         }
 
-        [HttpGet("/test")]
-        public ActionResult TestMethod(string datetime)
-        {
-            try
-            {
-                DateTime response;
-                if (!DateTime.TryParse(datetime, out response))
-                {
-                    throw new InvalidDataException("Date String is invalid");
-                }
-                DateTime utcTime5MinutesBefore = TimeZoneInfo.ConvertTimeToUtc(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 58, 0));
-                return Ok(utcTime5MinutesBefore);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+        
     }
 }

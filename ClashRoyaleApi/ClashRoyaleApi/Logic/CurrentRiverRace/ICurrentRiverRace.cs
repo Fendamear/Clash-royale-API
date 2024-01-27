@@ -19,7 +19,7 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
 
         Task<List<GetRiverRaceSeasonLogDTO>> GetRiverRaceSeasonLog();
 
-        Task<bool> DeleteRiverRaceLog(int seasonId, int sectionId);
+        Task<bool> DeleteRiverRaceLog(string id);
 
         int GetSeasonId(int sectionId, PeriodType type);
 

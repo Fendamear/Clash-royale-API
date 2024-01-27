@@ -62,5 +62,11 @@ namespace ClashRoyaleApi.Models
             CLANMEMBERINFO,
             RIVERRACE
         }
+
+        public enum JWTToken
+        {
+            ID,
+            ClanTag
+        }
     }
 }

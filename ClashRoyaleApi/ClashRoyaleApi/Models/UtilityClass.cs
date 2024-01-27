@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Security.Claims;
 
 namespace ClashRoyaleApi.Models
 {
@@ -22,5 +23,30 @@ namespace ClashRoyaleApi.Models
 
             return attribute.Value;
         }
+
+        public static string GetValueFromToken(ClaimsIdentity identity, EnumClass.JWTToken token)
+        {
+            string auth = "Authorization";
+            string res = string.Empty;
+
+            if (identity != null)
+            {
+                IEnumerable<Claim> claims = identity.Claims;
+                try
+                {
+                    res = claims.FirstOrDefault(x => x.Type == token.ToString()).Value;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Token Not available");
+                }
+            }
+            return res;
+        }
+
+
+
+
+
     }
 }

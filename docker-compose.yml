@@ -8,6 +8,14 @@ services:
       - TimeStamp=16:00
     ports: 
         - 5050:80
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: '1.5g'
+        reservations:
+          cpus: '1'
+          memory: '500M' 
     build:
       context: .
       dockerfile: /ClashRoyaleApi/ClashRoyaleApi/Dockerfile
@@ -21,6 +29,14 @@ services:
     restart: always
     ports:
       - 3306:3306
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '1g'
+        reservations:
+          cpus: '0.5'
+          memory: '500M' 
     environment:
       MYSQL_ROOT_PASSWORD: example
     volumes:
@@ -30,6 +46,14 @@ services:
     restart: always
     ports:
       - 8080:80
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: '250M'
+        reservations:
+          cpus: '0.25'
+          memory: '100M' 
     environment:
       - PMA_ARBITRARY=1
 

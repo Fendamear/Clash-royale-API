@@ -15,6 +15,7 @@
     "axios": "^1.6.0",
     "bootstrap": "^5.3.2",
     "flowbite-react": "^0.6.4",
+    "jwt-decode": "^4.0.0",
     "material-react-table": "^2.0.5",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
@@ -32,12 +33,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [

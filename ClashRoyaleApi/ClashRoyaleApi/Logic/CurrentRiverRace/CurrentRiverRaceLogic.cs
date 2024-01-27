@@ -138,9 +138,10 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
             {
                 response.Add(new GetRiverRaceSeasonLogDTO()
                 {
+                    Guid = logItem.Guid.ToString(),
                     TimeStamp = logItem.TimeStamp,
                     SeasonId = logItem.SeasonId,
-                    SectionId = logItem.SectionId,
+                    SectionId = $"Week {logItem.SectionId + 1}",
                     type = logItem.Type,
                 });        
             }
@@ -163,9 +164,15 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
             await _dataContext.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteRiverRaceLog(int seasonId, int sectionId)
+        public async Task<bool> DeleteRiverRaceLog(string id)
         {
-            DbRiverRaceLog log = await _dataContext.RiverRaceLogs.Where(x => x.SeasonId == seasonId && x.SectionId == sectionId).FirstOrDefaultAsync();
+            Guid guid;
+            if (!Guid.TryParse(id, out guid))
+            {
+                throw new FormatException("Id is not a GUID Id");
+            }
+
+            DbRiverRaceLog log = await _dataContext.RiverRaceLogs.Where(x => x.Guid == guid).FirstOrDefaultAsync();
             if (log == null) return false;
             _dataContext.RiverRaceLogs.Remove(log);
             await _dataContext.SaveChangesAsync();

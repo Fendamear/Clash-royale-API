@@ -196,7 +196,6 @@ const ClanMembers = () => {
                     <Button style={{ textAlign: 'center', display: "flex", justifyContent: "center" }} onClick={SuperCell}>
                         Get Data From Supercell
                     </Button></div>
-
             </div>
         </div>
     </>;

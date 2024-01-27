@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text;
 using ClashRoyaleApi.Logic.ClanMembers;
 using ClashRoyaleApi.Data;
 using ClashRoyaleApi.Logic.RiverRace;
@@ -17,6 +18,10 @@ using ClashRoyaleApi.Logic.RoyaleApi;
 using ClashRoyaleApi.Logic.MailHandler;
 using ClashRoyaleApi.Logic.MailHandler.MailSubscription;
 using ClashRoyaleApi.Logic.CallList;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,7 +55,6 @@ else
     }
 }
 
-Debug.WriteLine(Timestamp.ToString());
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -67,7 +71,34 @@ builder.Services.AddDbContext<DataContext>(options =>
     }
 });
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Description = "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
+        options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                    .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value!)),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+            options.MapInboundClaims = false;
+        });
+
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddControllersWithViews().AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
@@ -109,14 +140,14 @@ builder.Services.AddQuartz(q =>
     //scheduler for current river race
 
     //5 minutes before
-    q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE30)
+    q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE5)
         .WithIdentity("riverRaceScheduler-5Minutes")
         .WithSchedule(CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(utcTime5MinutesBefore.Hour, utcTime5MinutesBefore.Minute,
                 new[] { DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Monday })
             .InTimeZone(localTimeZone)));
 
     //30 minutes before
-    q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE5)
+    q.AddTrigger(opts => opts.ForJob(jobKeyCRR).UsingJobData("param", (int)SchedulerTime.MINUTESBEFORE30)
         .WithIdentity("riverRaceScheduler-30Minutes")
         .WithSchedule(
             CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(utcTime30MinutesBefore.Hour, utcTime30MinutesBefore.Minute,

@@ -17,6 +17,5 @@ namespace ClashRoyaleApi.Logic.Logging
             _dataContext.CurrentRiverRaceLogs.Add(response.log);
             _dataContext.SaveChanges();
         }
-
     }
 }

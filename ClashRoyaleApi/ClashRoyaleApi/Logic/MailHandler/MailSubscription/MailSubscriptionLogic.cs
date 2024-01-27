@@ -38,15 +38,6 @@ namespace ClashRoyaleApi.Logic.MailHandler.MailSubscription
             }
 
             _dataContext.SaveChanges();
-
-
-
-
-
-
-
-
-
             //foreach (MailSubscriptionsDTO mSub in dto)
             //{
             //    if (mSub.IsEnabled)

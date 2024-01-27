@@ -4,6 +4,9 @@ using ClashRoyaleApi.Logic.MailHandler;
 using ClashRoyaleApi.Logic.MailHandler.MailSubscription;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Security.Claims;
+using ClashRoyaleApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using static ClashRoyaleApi.Models.EnumClass;
 
 namespace ClashRoyaleApi.Controllers
@@ -39,12 +42,13 @@ namespace ClashRoyaleApi.Controllers
         }
 
         [HttpGet("[Controller]/GetMailSubscription")]
+        [Authorize]
         public ActionResult<List<MailSubscriptionsDTO>> GetMailSubscriptions()
         {
             try
             {
-                string clantag = "#LY0UQ9R";
-                return Ok(_mailSubscription.GetMailSubscriptions(clantag));
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                return Ok(_mailSubscription.GetMailSubscriptions(UtilityClass.GetValueFromToken(identity, JWTToken.ClanTag)));
             }
             catch (Exception ex)
             {
@@ -53,12 +57,13 @@ namespace ClashRoyaleApi.Controllers
         }
 
         [HttpPost("[Controller]/UpdateMailSubscriptions")]
+        [Authorize]
         public ActionResult UpdateMailSubscription([FromBody] List<MailSubscriptionsDTO> dto)
         {
             try
             {
-                string clantag = "#LY0UQ9R";
-                _mailSubscription.UpdateMailSubscriptions(dto, clantag);
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                _mailSubscription.UpdateMailSubscriptions(dto, UtilityClass.GetValueFromToken(identity, JWTToken.ClanTag));
                 return Ok();
             }
             catch (Exception ex)
@@ -66,6 +71,5 @@ namespace ClashRoyaleApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-            
     }
 }

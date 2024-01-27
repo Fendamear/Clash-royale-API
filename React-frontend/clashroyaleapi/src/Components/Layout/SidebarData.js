@@ -3,6 +3,12 @@ import * as AiIcons from "react-icons/ai"
 import * as GoIcons from "react-icons/go"
 import { VscAccount } from "react-icons/vsc"
 import { MdLeaderboard} from "react-icons/md"
+import { MdCall } from "react-icons/md";
+import { FaPeopleGroup } from "react-icons/fa6";
+import { MdStorage } from "react-icons/md";
+import { MdLogin } from "react-icons/md";
+import { FaRegRegistered } from "react-icons/fa";
+
 
 export const SidebarData = [
     {
@@ -13,13 +19,13 @@ export const SidebarData = [
     },
     {
         title: "Login",
-        icon: <AiIcons.AiFillHome />,
+        icon: <MdLogin />,
         link: "/login",
         cName: 'nav-text'
     },
     {
         title: "Register",
-        icon: <AiIcons.AiFillHome />,
+        icon: <FaRegRegistered />,
         link: "/register",
         cName: 'nav-text'
     },
@@ -37,26 +43,26 @@ export const SidebarData = [
     },
     {
         title: "Call List",
-        icon: <MdLeaderboard />,
+        icon: <MdCall />,
         link: "/CallList",
         cName: 'nav-text'
     },
     {
         title: "Clan Members",
-        icon: <GoIcons.GoCalendar />,
+        icon: <FaPeopleGroup />,
         link: "/ClanMembers",
         cName: 'nav-text'
     },
     {
         title: "Clan Member Log",
-        icon: <GoIcons.GoCalendar />,
+        icon: <MdStorage />,
         link: "/clanMemberLog",
         cName: 'nav-text'
     },
     {
         title: "River Race Log",
-        icon: <GoIcons.GoCalendar />,
-        link: "/clanMemberLog",
+        icon: <MdStorage />,
+        link: "/riverracelog",
         cName: 'nav-text'
     },
 ]

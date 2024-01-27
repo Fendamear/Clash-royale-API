@@ -12,10 +12,12 @@ namespace ClashRoyaleApi.Logic.Authentication
     {
 
         private readonly DataContext _dataContext;
+        private readonly IConfiguration _configuration; 
 
-        public AuthenticationLogic(DataContext context)
+        public AuthenticationLogic(DataContext context, IConfiguration configuration)
         {
             _dataContext = context;
+            _configuration = configuration;
         }
 
         public ClanTagDTO RegisterWithClanTag(string clanTag) 
@@ -57,6 +59,11 @@ namespace ClashRoyaleApi.Logic.Authentication
                 role = UserRole.CoLeader;
             }
 
+            if (member.ClanTag == "#LYOUQ9R")
+            {
+                role = UserRole.Admin;
+            }
+
             DBUser user = new DBUser()
             {
                 Id = id,
@@ -85,6 +92,29 @@ namespace ClashRoyaleApi.Logic.Authentication
                 response.Add(new ClanTagNameDTO(user.ClanTag, user.Name));         
             }
             return response;
+        }
+
+        public async Task<TokenDTO> GenerateToken(LoginDTO dto)
+        {
+            TokenDTO token = new TokenDTO();
+
+            TokenManager manager = new TokenManager(_configuration);
+
+            try
+            {
+                DBUser user = await _dataContext.DBUser.SingleAsync(u => u.Email == dto.Email);
+                if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password)) throw new Exception("Email or passwords do not match");
+                token.Token = manager.CreateToken(user);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new Exception("User does not exist");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return token;
         }
     }
 }

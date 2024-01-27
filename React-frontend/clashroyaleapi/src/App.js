@@ -9,6 +9,8 @@ import CallList from './Components/CallList/CallList'
 import CollapsibleTable from './Components/currentRiverRace/currentriverrace';
 import ClanMembers from './Components/ClanMembers/clanMembers';
 import ClanMemberLog from './Components/ClanMemberLog/ClanMemberLog';
+import Login from './Components/Login/Login'
+import RiverRaceLog from './Components/RiverRaceLog/RiverRaceLog'
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
       <Route path='/CurrentRiverRace' element={<CollapsibleTable />} />
       <Route path='/ClanMembers' element={<ClanMembers />} />
       <Route path='/ClanMemberLog' element={<ClanMemberLog />} />
+      <Route path='/Login' element={<Login />} />
+      <Route path='/riverracelog' element={<RiverRaceLog/>} />
       {/* <Route path='/calendar' element={<Race />} />
       <Route path='/Account/:id' element={<Account />} />
       <Route path='/home/predictions' element={<Account />} />

@@ -9,5 +9,7 @@ namespace ClashRoyaleApi.Logic.Authentication
         Task<CreateUserDTO> RegisterUser(CreateUserDTO register);
 
         Task<List<ClanTagNameDTO>> GetAllClanTagsWithNameFromDbClanMemberDb();
+
+        Task<TokenDTO> GenerateToken(LoginDTO dto);
     }
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MailSubscription } from './MailSubscriptionData'
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import './MailSubscription.css';
 import '../style/Global.css'
 import { MailPreferenceUrl } from '../../BaseUrl'
@@ -7,22 +8,32 @@ import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import Alert from '@mui/material/Alert'
 import Collapse from '@mui/material/Collapse';
-
+ 
 const MailSettingsMatrix = () => {
 
+    let navigate = useNavigate();
+
     useEffect(() => {
+        console.log(localStorage.getItem("accessToken"))
+
+
         var config = {
             method: 'get',
             url: MailPreferenceUrl + 'GetMailSubscription',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + localStorage.getItem("accessToken")
             },
         };
         axios(config).then((response) => {
             setMailSettings(response.data)
-            console.log(response.data);
         }).catch(function (error) {
-            console.log(error);
+            console.log(error)
+            console.log(error.message)
+            if (error.message === "Network Error")
+            {
+                navigate("/login")
+            }
         });
     }, [])
 
@@ -48,7 +59,8 @@ const MailSettingsMatrix = () => {
             method: 'post',
             url: MailPreferenceUrl + 'UpdateMailSubscriptions',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + localStorage.getItem("accessToken")
             },
             data: mailSettings
         };
@@ -56,7 +68,7 @@ const MailSettingsMatrix = () => {
         axios(config).then((response) => {
             showError(false)
             showMessage(true);
-            console.log(response.data);
+            console.log(response);
         }).catch(function (error) {
             showMessage(false);
             setErrorMessage(error.message + " - " + error.response.data);
