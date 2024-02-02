@@ -4,6 +4,8 @@
     {
         public string Name { get; set; }
 
+        public string Tag { get; set; }
+
         public string DateIdentifier { get; set; }
 
         public DateTime Time { get; set; }

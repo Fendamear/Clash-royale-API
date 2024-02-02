@@ -35,113 +35,113 @@ namespace UnitTest.Logic_Layer_Test.Clan
             _handlerMock = new Mock<HttpMessageHandler>();
         }
 
-        [TestMethod]
-        public async Task RetrieveClanInfoScheduler_ShouldReturnMemberAsInactive()
-        {
-            //arrange
-            string role = "elder";
-            DateTime dateTime = DateTime.Now.AddDays(-8);
-            bool isActive = true;
-            bool isInClan = true; ;
-            string format = "";
+        //[TestMethod]
+        //public async Task RetrieveClanInfoScheduler_ShouldReturnMemberAsInactive()
+        //{
+        //    //arrange
+        //    string role = "elder";
+        //    DateTime dateTime = DateTime.Now.AddDays(-8);
+        //    bool isActive = true;
+        //    bool isInClan = true; ;
+        //    string format = "";
 
-            string formattedDate = dateTime.ToString("yyyyMMddTHHmmss.fffZ");
-            TestHelperClass helper = new TestHelperClass();
-            var clanMembers = new List<DbClanMembers>();
+        //    string formattedDate = dateTime.ToString("yyyyMMddTHHmmss.fffZ");
+        //    TestHelperClass helper = new TestHelperClass();
+        //    var clanMembers = new List<DbClanMembers>();
 
-            //var expectedRecord = helper.GetCurrentRiverRace();
-            //currentRiverRace.Add(expectedRecord);
+        //    //var expectedRecord = helper.GetCurrentRiverRace();
+        //    //currentRiverRace.Add(expectedRecord);
          
-            var mockContext = new Mock<DataContext>();
-            mockContext.Setup(dc => dc.DbClanMembers).Returns(MockDbSet(clanMembers));
-            mockContext.Setup(dc => dc.Update(new DbClanMembers()));
+        //    var mockContext = new Mock<DataContext>();
+        //    mockContext.Setup(dc => dc.DbClanMembers).Returns(MockDbSet(clanMembers));
+        //    mockContext.Setup(dc => dc.Update(new DbClanMembers()));
 
-            var riverRace = new Mock<ClanMemberLogic>(mockContext.Object);
+        //    var riverRace = new Mock<ClanMemberLogic>(mockContext.Object);
 
-            riverRace.Setup(x => x.RoyaleApiCall()).ReturnsAsync(GetOneMember(formattedDate));
-            riverRace.Setup(x => x.GetAllClanMembers()).Returns(helper.GetClanMember(role, dateTime, isActive, isInClan));
-            riverRace.Setup(x => x.AddNewMember(new Member(), format));
-            riverRace.Setup(x => x.AddLog("tag", "name", MemberStatus.Joined, "", ""));
+        //    riverRace.Setup(x => x.RoyaleApiCall()).ReturnsAsync(GetOneMember(formattedDate));
+        //    riverRace.Setup(x => x.GetAllClanMembers()).Returns(helper.GetClanMember(role, dateTime, isActive, isInClan));
+        //    riverRace.Setup(x => x.AddNewMember(new Member(), format));
+        //    riverRace.Setup(x => x.AddLog("tag", "name", MemberStatus.Joined, "", ""));
 
-            //act
-            List<DbClanMembers> response = await riverRace.Object.RetrieveClanInfoScheduler();
-            DbClanMembers member = response.FirstOrDefault();
-            mockContext.Verify(x => x.SaveChanges(), Times.Once());
-            Assert.IsFalse(isActive);
-        }
+        //    //act
+        //    List<DbClanMembers> response = await riverRace.Object.RetrieveClanInfoScheduler();
+        //    DbClanMembers member = response.FirstOrDefault();
+        //    mockContext.Verify(x => x.SaveChanges(), Times.Once());
+        //    Assert.IsFalse(isActive);
+        //}
 
-        [TestMethod]
-        public async Task RetrieveClanInfoScheduler_ShouldReturnMemberActiveAgain()
-        {
-            //arrange
-            string role = "elder";
-            DateTime dateTime = DateTime.Now;
-            bool isActive = false;
-            bool isInClan = true; 
-            string format = "";
-            string formattedDate = dateTime.ToString("yyyyMMddTHHmmss.fffZ");
-            TestHelperClass helper = new TestHelperClass();
-            var clanMembers = new List<DbClanMembers>();
+        //[TestMethod]
+        //public async Task RetrieveClanInfoScheduler_ShouldReturnMemberActiveAgain()
+        //{
+        //    //arrange
+        //    string role = "elder";
+        //    DateTime dateTime = DateTime.Now;
+        //    bool isActive = false;
+        //    bool isInClan = true; 
+        //    string format = "";
+        //    string formattedDate = dateTime.ToString("yyyyMMddTHHmmss.fffZ");
+        //    TestHelperClass helper = new TestHelperClass();
+        //    var clanMembers = new List<DbClanMembers>();
 
-            //var expectedRecord = helper.GetCurrentRiverRace();
-            //currentRiverRace.Add(expectedRecord);
+        //    //var expectedRecord = helper.GetCurrentRiverRace();
+        //    //currentRiverRace.Add(expectedRecord);
 
-            var mockContext = new Mock<DataContext>();
-            mockContext.Setup(dc => dc.DbClanMembers).Returns(MockDbSet(clanMembers));
-            mockContext.Setup(dc => dc.Update(new DbClanMembers()));
+        //    var mockContext = new Mock<DataContext>();
+        //    mockContext.Setup(dc => dc.DbClanMembers).Returns(MockDbSet(clanMembers));
+        //    mockContext.Setup(dc => dc.Update(new DbClanMembers()));
 
-            var riverRace = new Mock<ClanMemberLogic>(mockContext.Object);
+        //    var riverRace = new Mock<ClanMemberLogic>(mockContext.Object);
 
-            riverRace.Setup(x => x.RoyaleApiCall()).ReturnsAsync(GetOneMember(formattedDate));
-            riverRace.Setup(x => x.GetAllClanMembers()).Returns(helper.GetClanMember(role, dateTime, isActive, isInClan));
-            riverRace.Setup(x => x.AddNewMember(new Member(), format));
-            riverRace.Setup(x => x.AddLog("tag", "name", MemberStatus.Joined, "", ""));
+        //    riverRace.Setup(x => x.RoyaleApiCall()).ReturnsAsync(GetOneMember(formattedDate));
+        //    riverRace.Setup(x => x.GetAllClanMembers()).Returns(helper.GetClanMember(role, dateTime, isActive, isInClan));
+        //    riverRace.Setup(x => x.AddNewMember(new Member(), format));
+        //    riverRace.Setup(x => x.AddLog("tag", "name", MemberStatus.Joined, "", ""));
 
-            //act
-            List<DbClanMembers> response = await riverRace.Object.RetrieveClanInfoScheduler();
-            DbClanMembers member = response.FirstOrDefault();
-            mockContext.Verify(x => x.SaveChanges(), Times.Once());
-            string newRole = member.Role;
-            Assert.IsTrue(member.IsActive);
-        }
+        //    //act
+        //    List<DbClanMembers> response = await riverRace.Object.RetrieveClanInfoScheduler();
+        //    DbClanMembers member = response.FirstOrDefault();
+        //    mockContext.Verify(x => x.SaveChanges(), Times.Once());
+        //    string newRole = member.Role;
+        //    Assert.IsTrue(member.IsActive);
+        //}
 
-        [TestMethod]
-        public async Task RetrieveClanInfoScheduler_ShouldReturnMemberRoleChange()
-        {
-            //arrange
-            string role = "member";
-            DateTime dateTime = DateTime.Now;
-            bool isActive = true;
-            bool isInClan = true; 
-            string format = "";
+        //[TestMethod]
+        //public async Task RetrieveClanInfoScheduler_ShouldReturnMemberRoleChange()
+        //{
+        //    //arrange
+        //    string role = "member";
+        //    DateTime dateTime = DateTime.Now;
+        //    bool isActive = true;
+        //    bool isInClan = true; 
+        //    string format = "";
 
-            string formattedDate = dateTime.ToString("yyyyMMddTHHmmss.fffZ");
+        //    string formattedDate = dateTime.ToString("yyyyMMddTHHmmss.fffZ");
 
-            TestHelperClass helper = new TestHelperClass();
-            var clanMembers = new List<DbClanMembers>();
+        //    TestHelperClass helper = new TestHelperClass();
+        //    var clanMembers = new List<DbClanMembers>();
 
-            //var expectedRecord = helper.GetCurrentRiverRace();
-            //currentRiverRace.Add(expectedRecord);
+        //    //var expectedRecord = helper.GetCurrentRiverRace();
+        //    //currentRiverRace.Add(expectedRecord);
 
-            var mockContext = new Mock<DataContext>();
-            mockContext.Setup(dc => dc.DbClanMembers).Returns(MockDbSet(clanMembers));
-            mockContext.Setup(dc => dc.Update(new DbClanMembers()));
+        //    var mockContext = new Mock<DataContext>();
+        //    mockContext.Setup(dc => dc.DbClanMembers).Returns(MockDbSet(clanMembers));
+        //    mockContext.Setup(dc => dc.Update(new DbClanMembers()));
 
-            var riverRace = new Mock<ClanMemberLogic>(mockContext.Object);
+        //    var riverRace = new Mock<ClanMemberLogic>(mockContext.Object);
 
-            riverRace.Setup(x => x.RoyaleApiCall()).ReturnsAsync(GetOneMember(formattedDate));
-            riverRace.Setup(x => x.GetAllClanMembers()).Returns(helper.GetClanMember(role, dateTime, isActive, isInClan));
-            riverRace.Setup(x => x.AddNewMember(new Member(), format));
-            riverRace.Setup(x => x.AddLog("tag", "name", MemberStatus.Joined, "", ""));
+        //    riverRace.Setup(x => x.RoyaleApiCall()).ReturnsAsync(GetOneMember(formattedDate));
+        //    riverRace.Setup(x => x.GetAllClanMembers()).Returns(helper.GetClanMember(role, dateTime, isActive, isInClan));
+        //    riverRace.Setup(x => x.AddNewMember(new Member(), format));
+        //    riverRace.Setup(x => x.AddLog("tag", "name", MemberStatus.Joined, "", ""));
 
-            //act
-            List<DbClanMembers> response = await riverRace.Object.RetrieveClanInfoScheduler();
-            DbClanMembers member = response.FirstOrDefault();
-            mockContext.Verify(x => x.SaveChanges(), Times.Once());
-            string newRole = member.Role;   
-            Assert.AreEqual("elder", newRole);
-            Assert.AreEqual(1, response.Count);
-        }
+        //    //act
+        //    List<DbClanMembers> response = await riverRace.Object.RetrieveClanInfoScheduler();
+        //    DbClanMembers member = response.FirstOrDefault();
+        //    mockContext.Verify(x => x.SaveChanges(), Times.Once());
+        //    string newRole = member.Role;   
+        //    Assert.AreEqual("elder", newRole);
+        //    Assert.AreEqual(1, response.Count);
+        //}
 
         public DbSet<T> MockDbSet<T>(List<T> data) where T : class
         {

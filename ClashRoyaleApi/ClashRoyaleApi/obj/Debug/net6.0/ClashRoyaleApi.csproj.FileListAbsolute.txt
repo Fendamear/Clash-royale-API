@@ -77,6 +77,7 @@ C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\b
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\BCrypt.Net-Next.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Humanizer.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
@@ -91,6 +92,12 @@ C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\b
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.OpenApi.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Mono.TextTemplating.dll
@@ -102,12 +109,16 @@ C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\b
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Quartz.AspNetCore.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Quartz.Extensions.DependencyInjection.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Quartz.Extensions.Hosting.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Scrutor.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\System.CodeDom.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\System.Drawing.Common.dll
+C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\System.Security.Permissions.dll
 C:\Documents\Thuis\Clash royale\Clash-royale-API\ClashRoyaleApi\ClashRoyaleApi\bin\Debug\net6.0\System.Text.Encodings.Web.dll

@@ -11,7 +11,7 @@ import { CurrentRiverRaceUrl } from '../../BaseUrl';
 import axios from 'axios'
 import { alignProperty } from '@mui/material/styles/cssUtils';
 import Select from 'react-select'
-import { sectionOptions, dayOptions, seasonOptions } from './data';
+import { sectionOptions, dayOptions, seasonOptions } from '../Layout/SidebarData';
 
 const Example = () => {
 
@@ -188,6 +188,7 @@ const Example = () => {
         });
         console.log(formValue)
     };
+
     return <>
         <br></br>
         <div class="wrapperCurrentriverrace">

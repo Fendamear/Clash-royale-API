@@ -42,7 +42,7 @@ namespace ClashRoyaleApi.Controllers
         }
 
         [HttpGet("[Controller]/GetMailSubscription")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult<List<MailSubscriptionsDTO>> GetMailSubscriptions()
         {
             try

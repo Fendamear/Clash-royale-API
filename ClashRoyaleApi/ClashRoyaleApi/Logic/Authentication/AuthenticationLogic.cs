@@ -50,7 +50,7 @@ namespace ClashRoyaleApi.Logic.Authentication
 
             UserRole role = new UserRole();
 
-            if(member.Role != "CoLeader")
+            if (member.Role != "CoLeader")
             {
                 role = UserRole.Member;
             }
@@ -59,7 +59,7 @@ namespace ClashRoyaleApi.Logic.Authentication
                 role = UserRole.CoLeader;
             }
 
-            if (member.ClanTag == "#LYOUQ9R")
+            if (member.ClanTag == "#LY0UQ9R")
             {
                 role = UserRole.Admin;
             }

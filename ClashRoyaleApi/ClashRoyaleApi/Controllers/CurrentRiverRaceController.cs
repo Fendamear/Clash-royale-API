@@ -1,4 +1,5 @@
-﻿using ClashRoyaleApi.DTOs.River_Race_Season_Log;
+﻿using ClashRoyaleApi.DTOs.Current_River_Race;
+using ClashRoyaleApi.DTOs.River_Race_Season_Log;
 using ClashRoyaleApi.Logic.CurrentRiverRace;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -88,6 +89,17 @@ namespace ClashRoyaleApi.Controllers
             }
         }
 
-        
+        [HttpGet("/CurrentRiverRace/GraphData")]
+        public ActionResult<List<GetGraphDataDTO>> GetRiverRaceData(int seasonId, int sectionId, bool notUsed)
+        {
+            try
+            {
+                return Ok(_currentRiverRace.GetGraphData(seasonId, sectionId, notUsed));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

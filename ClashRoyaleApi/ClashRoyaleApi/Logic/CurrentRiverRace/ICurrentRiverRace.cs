@@ -27,6 +27,8 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
 
         List<NrOfAttacksRemaining> AddRiverRaceData(Root log, int seasonId, int dayOfWeek, SchedulerTime time);
 
-        DbRiverRaceLog GetRRSeasonLogBySeasonAndSectionID(int seasonId, int sectionId); 
+        DbRiverRaceLog GetRRSeasonLogBySeasonAndSectionID(int seasonId, int sectionId);
+
+        List<GetGraphDataDTO> GetGraphData(int seasonId, int sectionId, bool notUsed);
     }
 }
