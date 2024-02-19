@@ -1,4 +1,6 @@
 ﻿using ClashRoyaleApi.DTOs.Current_River_Race;
+using ClashRoyaleApi.DTOs.Current_River_Race.Homepage;
+using ClashRoyaleApi.DTOs.Current_River_Race.Homepage.AllTime;
 using ClashRoyaleApi.DTOs.River_Race_Season_Log;
 using ClashRoyaleApi.Models.CurrentRiverRace;
 using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
@@ -29,6 +31,8 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
 
         DbRiverRaceLog GetRRSeasonLogBySeasonAndSectionID(int seasonId, int sectionId);
 
-        List<GetGraphDataDTO> GetGraphData(int seasonId, int sectionId, bool notUsed);
+        WeeklyDataDTO GetWeeklyData(DateTime startDate, DateTime endDate);
+
+        AllTimeDataDTO GetAllTimeData();
     }
 }

@@ -26,8 +26,5 @@ namespace ClashRoyaleApi.Models.DbModels
             SectionId = sectionid;
             Type = type;
         }
-
-
-
     }
 }

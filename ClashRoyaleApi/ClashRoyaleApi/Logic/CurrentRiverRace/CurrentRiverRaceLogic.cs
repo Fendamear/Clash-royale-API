@@ -6,14 +6,12 @@ using ClashRoyaleApi.Models.CurrentRiverRace;
 using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
 using ClashRoyaleApi.Models.DbModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System.Net.Http.Headers;
-using ClashRoyaleApi.Logic.RoyaleApi;
 using static ClashRoyaleApi.Models.EnumClass;
 using ClashRoyaleApi.DTOs.Current_River_Race;
-using ClashRoyaleApi.Models;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+using ClashRoyaleApi.DTOs.Current_River_Race.Homepage;
+using ClashRoyaleApi.DTOs.Current_River_Race.Homepage.AllTime;
+using ClashRoyaleApi.Migrations;
 
 namespace ClashRoyaleApi.Logic.CurrentRiverRace
 {
@@ -384,48 +382,72 @@ namespace ClashRoyaleApi.Logic.CurrentRiverRace
             }
         }
 
-        public List<GetGraphDataDTO> GetGraphData(int seasonId, int sectionId, bool notUsed)
+        public WeeklyDataDTO GetWeeklyData(DateTime startDate, DateTime endDate)
         {
-            int season = seasonId;
-            int week = sectionId;
+            var logsInRange = _dataContext.RiverRaceLogs
+                .Where(log => log.TimeStamp >= startDate && log.TimeStamp <= endDate)
+                .FirstOrDefault();
 
-            if (seasonId == 0)
+            if (logsInRange == null)
             {
-                DbRiverRaceLog log = _dataContext.RiverRaceLogs.OrderByDescending(x => x.TimeStamp).FirstOrDefault();
-
-                if (log != null)
-                {
-                    season = log.SeasonId;
-                    week = log.SectionId;
-                }
+                throw new ArgumentException();
             }
+
+            WeeklyDataDTO response = new WeeklyDataDTO();
+
+            int season = logsInRange.SeasonId;
+            int week = logsInRange.SectionId;
 
             List<CurrentRiverRaceSeasonDTO> data = GetCurrentRiverRace(season, week, -1);
             var members = _dataContext.DbClanMembers.ToList();
-            List<GetGraphDataDTO> response = new List<GetGraphDataDTO>();
+            List<GetGraphDataDTO> graphData = new List<GetGraphDataDTO>();
 
             foreach (var entry in data)
             {
                 if (members.FirstOrDefault(x => x.ClanTag == entry.Tag)?.IsInClan == false) continue; 
 
-                if (notUsed && entry.DecksNotUsed == 0) continue;
+                if (entry.DecksNotUsed == 0) continue;
 
-
-                response.Add(new GetGraphDataDTO
+                graphData.Add(new GetGraphDataDTO
                 {
                     Name = entry.Name,
-                    Fame = entry.Fame,
                     DecksNotUsed = entry.DecksNotUsed,
-                    DecksUsed = entry.DecksUsed
                 });
             }
 
-            if (notUsed)
-            {
-                return response.OrderByDescending(x => x.DecksNotUsed).ToList();
-            }
+            var lowest = data.MinBy(x => x.Fame);
+            var highest = data.MaxBy(x => x.Fame);
 
-            return response.OrderByDescending(x => x.Fame).ToList();
+            response.GraphData = graphData.OrderByDescending(x => x.DecksNotUsed).ToList();
+            response.Lowest = new LowestHighestDTO(lowest.Name, lowest.Fame);
+            response.Highest = new LowestHighestDTO(highest.Name, highest.Fame);
+
+            return response;
         }
+
+        public AllTimeDataDTO GetAllTimeData()
+        {
+            var currentRiverRaceData = _dataContext.CurrentRiverRace.ToList();
+
+            AllTimeDataDTO test = new AllTimeDataDTO();
+
+            test.HighestDecksNotUsed = _dataContext.GetDecksNotUsed(true);
+            test.LowestDecksNotUsed = _dataContext.GetDecksNotUsed(false);
+
+            return test;
+        }
+      
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

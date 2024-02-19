@@ -1,4 +1,5 @@
-﻿using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
+﻿using ClashRoyaleApi.DTOs.Current_River_Race.Homepage;
+using ClashRoyaleApi.Models.CurrentRiverRace.CRR_Response;
 using ClashRoyaleApi.Models.DbModels;
 using ClashRoyaleApi.Models.Mail;
 using Microsoft.EntityFrameworkCore;
@@ -25,10 +26,6 @@ namespace ClashRoyaleApi.Data
         {
             base.OnModelCreating(modelBuilder);
         }
-
-
-
-
 
         public DbSet<DbRiverRaceParticipant> RiverRaceParticipant { get; set;}
 
@@ -65,6 +62,22 @@ namespace ClashRoyaleApi.Data
                         select user;
 
             return query.ToList();
+        }
+
+        public LowestHighestDTO GetDecksNotUsed(bool asc)
+        {
+            var query = from race in CurrentRiverRace
+                        group race by race.Tag into g
+                        select new
+                        {
+                            Name = g.FirstOrDefault().Name,
+                            TotalDecksNotUsed = g.Sum(r => r.DecksNotUsed)
+                        } into result
+                        orderby asc ? result.TotalDecksNotUsed : -result.TotalDecksNotUsed descending
+                        select new { result.Name, result.TotalDecksNotUsed };
+              
+            var top = query.FirstOrDefault();
+            return new LowestHighestDTO(top.Name, top.TotalDecksNotUsed);
         }
     }
 }

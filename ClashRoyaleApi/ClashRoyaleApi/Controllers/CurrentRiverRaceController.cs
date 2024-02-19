@@ -44,7 +44,6 @@ namespace ClashRoyaleApi.Controllers
             }
         }
 
-
         [HttpGet("CurrentRiverRace/GetRiverRaceLog")]
         public async Task<ActionResult<List<GetRiverRaceSeasonLogDTO>>> GetRiverRaceSeasonLog()
         {
@@ -90,16 +89,32 @@ namespace ClashRoyaleApi.Controllers
         }
 
         [HttpGet("/CurrentRiverRace/GraphData")]
-        public ActionResult<List<GetGraphDataDTO>> GetRiverRaceData(int seasonId, int sectionId, bool notUsed)
+        public ActionResult<List<GetGraphDataDTO>> GetRiverRaceData(DateTime startDate, DateTime endDate)
         {
             try
             {
-                return Ok(_currentRiverRace.GetGraphData(seasonId, sectionId, notUsed));
+                return Ok(_currentRiverRace.GetWeeklyData(startDate, endDate));
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("AllTime")]
+        public ActionResult test()
+        {
+            try
+            {
+                return Ok(_currentRiverRace.GetAllTimeData());
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
     }
 }

@@ -3,8 +3,6 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using ClashRoyaleApi.Models.DbModels;
 
 namespace ClashRoyaleApi.Logic.Authentication
@@ -28,27 +26,24 @@ namespace ClashRoyaleApi.Logic.Authentication
                 new Claim("ClanTag", user.ClanTag),
                 new Claim("Admin", (user.Role == UserRole.Admin ? true : false).ToString())
             };
-
+            //_configuration.GetSection("AppSettings:Token").Value!)
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!));
 
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            DateTime dateTime = DateTime.UtcNow;
+            DateTime dateTime = DateTime.Now.AddHours(1);
 
             //feature for testing
             if (user.Role == UserRole.Admin)
             {
-                dateTime.AddHours(12);
-            }
-            else
-            {
-                dateTime.AddHours(1);
+                dateTime = dateTime.AddHours(11);
+                //dateTime.AddDays(1);
             }
 
             var token = new JwtSecurityToken(
                 claims: claims,
                 expires: dateTime,
-                signingCredentials: cred
+                signingCredentials: cred             
             );
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
